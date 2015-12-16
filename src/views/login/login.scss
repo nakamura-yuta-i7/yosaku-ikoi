@@ -1,0 +1,18 @@
+$color-error: red ;
+
+.logo { margin-top:40px; margin-left:auto; margin-right:auto; display:block; margin-bottom:27px; }
+.login-form {
+	text-align: center;
+	.name {
+		font-weight:900; font-size:15px; margin-bottom:8px;
+	}
+	input[type=text],
+	input[type=password],
+	input[type=submit] { height:36px; font-size:15px; font-weight: 900;
+		line-height: 36px; text-align: center; width:250px; border: none; }
+	input[type=text] { margin-bottom:1px; }
+	input[type=password] { margin-bottom:5px; }
+	input[type=submit] { color:#fff; background: #333; }
+}
+
+.error { color:$color-error; padding: 10px; }

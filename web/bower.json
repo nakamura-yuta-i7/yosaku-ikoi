@@ -1,0 +1,24 @@
+{
+  "name": "yosaku-ikoi",
+  "description": "yosaku ikoi",
+  "main": "index.js",
+  "authors": [
+    "Yuta Nakamura <yuta.nakamura.i7@gmail.com>"
+  ],
+  "license": "ISC",
+  "moduleType": [],
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "material-design-lite": "~1.0.6",
+    "jquery": "~2.1.4",
+    "jquery-color": "git://github.com/jquery/jquery-color.git#~2.1.2",
+    "jquery-ui": "~1.11.4"
+  }
+}

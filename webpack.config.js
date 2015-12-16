@@ -7,7 +7,9 @@ module.exports = [
 	{
 		name: "web",
 		entry: {
-			app: './src/web/app.js',
+			common: './src/views/common/common.js',
+			login: './src/views/login/login.js',
+			home: './src/views/home/home.js',
 		},
 		output: {
 			path: __dirname + "/web/dist",
