@@ -22,7 +22,8 @@ module.exports = [
 					exclude: /(node_modules|bower_components)/,
 					loader: "babel-loader?presets[]=es2015",
 				},
-				{ test: /\.(png|jpg|gif)$/, loader: 'url-loader?limit=8192' },
+				{ test: /\.(png|jpg|gif)$/, 
+					loader: 'url-loader?limit=8192' },
 				{ test: /\.jade$/, loader: "jade" },
 				{ test: /\.css$/,
 					loader: ExtractTextPlugin.extract("style-loader", "css-loader") },
@@ -34,7 +35,7 @@ module.exports = [
 		},
 		devtool: 'inline-source-map',
 		plugins: [
-			new ExtractTextPlugin("css/[name].css"),
+			new ExtractTextPlugin("[name].css"),
 			new CommonsChunkPlugin('init.js'),
 			// new uglifyJsPlugin({ compress: { warnings: false } }),
 			// new webpack.ProvidePlugin({

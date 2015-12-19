@@ -13,7 +13,7 @@
 	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 	<!-- webpack -->
 	<script src="/dist/init.js"></script>
-	<link rel="stylesheet" href="/dist/css/common.css">
+	<link rel="stylesheet" href="/dist/common.css">
 	<script src="/dist/common.js"></script>
 </head>
 <body>

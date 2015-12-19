@@ -1,5 +1,17 @@
 body, html { padding:0px; margin:0px; }
 body {
-	background: RGBA(227, 227, 227, 1);
+	background: #666;
 	-webkit-text-size-adjust: 100%;
 }
+.pad5-side { padding:0px 5px; }
+
+// -----------------------------------------------------------------------------
+// see: http://google.github.io/material-design-icons/
+// -----------------------------------------------------------------------------
+
+// colors
+.material-icons.md-dark { color: rgba(0, 0, 0, 0.54); }
+.material-icons.md-dark.md-inactive { color: rgba(0, 0, 0, 0.26); }
+
+.material-icons.md-light { color: rgba(255, 255, 255, 1); }
+.material-icons.md-light.md-inactive { color: rgba(255, 255, 255, 0.3); }

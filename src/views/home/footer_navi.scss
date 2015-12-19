@@ -1,0 +1,26 @@
+
+.footer_navi {
+	width: 100%;
+	background: #333;
+	div {
+		width:33%;
+	}
+	a {
+		color: #fff;
+		text-decoration: none;
+		font-size:8px;
+		display: block;
+		text-align: center;
+		&:hover {
+			color:#ccc;
+		}
+		i {
+			font-size:25px;
+		}
+		span {
+			display: block;
+			padding-top: 3px;
+			line-height: 1;
+		}
+	}
+}
