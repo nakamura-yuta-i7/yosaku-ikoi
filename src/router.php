@@ -26,6 +26,10 @@ class Router {
 				return $callback($this->_req, $this->_res);
 			}
 		}
-		throw new ErrorException(404);
+		throw new NotFoundException(404);
 	}
+}
+
+class NotFoundException extends ErrorException {
+	
 }

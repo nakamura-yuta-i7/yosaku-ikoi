@@ -3,7 +3,7 @@
 .message {
 	margin-bottom: 1em;
 	.user_img {
-		padding-right: 10px;
+		padding-right: 5px;
 		i { font-size:40px; }
 	}
 	.detail {
@@ -20,7 +20,7 @@
 			@include border-radius(15px);
 			position: relative;
 			&:before {
-				content: "▶";
+				// content: "▶";
 				color: #fff;
 				position: absolute;
 				margin-left: -15px;
@@ -43,14 +43,14 @@
 	margin-right: 0px;
 	.user_img {
 		padding-right: 0px;
-		padding-left: 10px;
+		padding-left: 5px;
 	}
 	.text {
 		&:before {
 			content: "";
 		}
 		&:after {
-			content: "▶";
+			// content: "▶";
 			color: #fff;
 			position: absolute;
 			top:0px;

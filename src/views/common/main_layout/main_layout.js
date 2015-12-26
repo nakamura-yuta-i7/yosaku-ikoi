@@ -1,28 +1,48 @@
 module.exports = class MainLayout {
 	constructor() {
-		this.$layout = $(`
-			<div class="
-				mdl-layout
-				mdl-js-layout">
-				${require("./side_panel")}
-				${require("./header")}
-				<main class="content-area mdl-layout__content">
-				</main>
-				${require("./footer_navi")}
+		this.$html = $(`
+			
+			<div class="container">
+				<div class="main-layout">
+						<!--${require("./side_panel")}-->
+						${require("./header")}
+						<main class="content-area">
+						</main>
+						${require("./footer_navi")}
+				</div>
 			</div>
+			
 			<style>
-			.mdl-layout__container {
-				position: relative;
-				background: #efefef;
+			.container {
+				width: 100%;
 				max-width: 500px;
-				margin:0px auto;
+				margin: 0px auto;
+				-webkit-overflow-scrolling: touch;
+			}
+			.main-layout {
+				position: fixed;
+				width: 100%;
+				max-width: 500px;
+				top: 44px;
+				background: #efefef;
+			}
+			.content-area {
+				width: 100%;
+				max-width: 500px;
+				overflow: scroll;
 			}
 			h2 { font-size:13px; color:#333; font-weight: 900; padding:10px; margin:0px; line-height:1em; }
 			</style>
+			
 		`)
+		this.$area = this.$html.find(".content-area")
 	}
-	setContent(html) {
-		this.$layout.find(".content-area").append(html)
+	setContent($html) {
+		this.$area.html(null)
+		this.$area.append($html)
 		return this
+	}
+	resetScrollTop() {
+		this.$area.scrollTop(0)
 	}
 }

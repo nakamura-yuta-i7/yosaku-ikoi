@@ -13,11 +13,6 @@ module.exports = {
 					テストトーク１
 				</div>
 				<div class="td">
-					<div class="btn btn-album">
-						<i class="material-icons">&#xE3B6;</i>
-					</div>
-				</div>
-				<div class="td">
 					<!-- アルバムメニュー -->
 					<div class="btn btn-other-menu mdl-js-button" id="demo-menu-lower-right">
 						<i class="material-icons">&#xE5D4;</i>
@@ -30,7 +25,12 @@ module.exports = {
 							<span>スター付きメッセージ一覧</span>
 						</li>
 					  <li disabled class="mdl-menu__item">
-							ログアウト
+							<i class="material-icons">&#xE3B6;</i>
+							<span>写真一覧</span>
+						</li>
+						<li disabled class="mdl-menu__item">
+							<i class="material-icons">&#xE411;</i>
+							<span>アルバム</span>
 						</li>
 					</ul>
 				</div>

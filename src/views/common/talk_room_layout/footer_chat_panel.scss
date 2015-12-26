@@ -5,7 +5,12 @@ form.footer_chat_panel {
 	padding: 8px;
 	display: table;
 	box-sizing: border-box;
+	
+	position: fixed;
+	bottom: 0px;
 	width: 100%;
+	max-width: 500px;
+	z-index: 100;
 	
 	border: {
 		top: 1px solid #ccc;

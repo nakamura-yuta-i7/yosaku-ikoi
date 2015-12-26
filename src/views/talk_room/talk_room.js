@@ -11,7 +11,7 @@ $(function() {
 		// チャット内容を描画
 		layout.addContent(content)
 		// 画面下までスクロール
-		$("main").delay(100).animate( {scrollTop:$("main").height()} )
+		$("main").delay(100).animate( {scrollTop:$("main").get(0).scrollHeight }, 700 )
 	})
 })
 

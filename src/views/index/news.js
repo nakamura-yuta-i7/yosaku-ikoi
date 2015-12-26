@@ -1,3 +1,4 @@
+require("./news.scss")
 module.exports = class News {
 	constructor() {
 		this.$news_area = null
@@ -32,8 +33,8 @@ module.exports = class News {
 			let text = `新規メンバーが加わりました`
 			let $tr = $(`
 				<tr>
-					<td>${datetime}</td>
-					<td>${text}</td>
+					<td class="datetime">${datetime}</td>
+					<td class="text">${text}</td>
 				</tr>
 			`)
 			return $tr

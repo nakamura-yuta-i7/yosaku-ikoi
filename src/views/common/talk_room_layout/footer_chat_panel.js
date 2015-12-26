@@ -14,13 +14,17 @@ module.exports = {
 							<i class="material-icons">&#xE3B6;</i>
 							<span>画像を追加</span>
 						</li>
-						<li class="mdl-menu__item">
+						<li disabled class="mdl-menu__item">
 							<i class="material-icons">&#xE3B6;</i>
 							<span>画像を加工してから追加</span>
 						</li>
 					  <li disabled class="mdl-menu__item">
 							<i class="material-icons">&#xE064;</i>
 							<span>動画を追加</span>
+						</li>
+						<li disabled class="mdl-menu__item">
+							<i class="material-icons">&#xE55F;</i>
+							<span>位置情報を追加</span>
 						</li>
 					</ul>
 				</div>
@@ -31,7 +35,9 @@ module.exports = {
 					<!-- 絵文字メニューパネル -->
 					<div class="mdl-menu mdl-menu--top-left mdl-js-menu mdl-js-ripple-effect"
 					    for="open-emotion-menu">
-							
+							<div class="" style="padding:10px; white-space:nowrap;">
+								Comming Soon...
+							</div>
 					</div>
 					
 				</div>

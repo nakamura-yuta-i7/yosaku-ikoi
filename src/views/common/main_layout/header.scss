@@ -1,6 +1,11 @@
 $header_width: 44px;
 header {
 	background: #333;
+	position: fixed;
+	top: 0;
+	width: 100%;
+	max-width: 500px;
+	z-index: 100;
 	
 	h1 {
 		height: $header_width;

@@ -11,4 +11,8 @@ class Response {
 	function json($data) {
 		echo json_encode($data, JSON_UNESCAPED_UNICODE);
 	}
+	function redirect($url) {
+		header('Location: ' . $url);
+		exit;
+	}
 }

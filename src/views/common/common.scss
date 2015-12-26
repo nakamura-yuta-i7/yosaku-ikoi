@@ -1,6 +1,10 @@
 @import "mixins";
 
-body, html { padding:0px; margin:0px; }
+body, html {
+	padding:0px; margin:0px;
+	position: relative;
+	height: 100%;
+}
 body {
 	background: #666;
 	-webkit-text-size-adjust: 100%;
@@ -12,6 +16,18 @@ body {
 .radius2 { @include border-radius(2px); }
 .radius3 { @include border-radius(3px); }
 .radius4 { @include border-radius(4px); }
+
+.mdl-data-table {
+	td, th {
+		vertical-align: middle;
+		line-height: normal;
+		padding: 10px !important;
+		white-space: normal;
+		text-align: left;
+	}
+}
+
+.nowrap { white-space: nowrap; }
 
 // -----------------------------------------------------------------------------
 // see: http://google.github.io/material-design-icons/

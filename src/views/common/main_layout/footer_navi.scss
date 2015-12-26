@@ -1,7 +1,12 @@
 .footer_navi {
+	position: fixed;
+	bottom: 0;
 	width: 100%;
+	max-width: 500px;
+	
 	background: #333;
-	div {
+	box-sizing: border-box;
+	.mdl-grid div {
 		width:25%;
 	}
 	a {

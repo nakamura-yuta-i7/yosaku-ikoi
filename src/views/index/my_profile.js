@@ -7,8 +7,7 @@ module.exports = $(`
 				<h2 class="mdl-card__title-text">Welcome</h2>
 			</div>
 			<div class="mdl-card__supporting-text">
-				Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-				Mauris sagittis pellentesque lacus eleifend lacinia...
+				ひとことメッセージ：
 			</div>
 			<div class="mdl-card__actions mdl-card--border">
 				<a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
@@ -16,9 +15,10 @@ module.exports = $(`
 				</a>
 			</div>
 			<div class="mdl-card__menu">
-				<button class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">
-					<i class="material-icons">share</i>
-				</button>
+				<a href="">
+					<i class="material-icons" title="地図を表示">&#xE55B;</i>
+					地図を表示
+				</a>
 			</div>
 		</div>
 		

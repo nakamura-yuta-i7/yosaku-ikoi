@@ -3,6 +3,9 @@ require dirname(__FILE__) . "/../src/bootstrap.php";
 
 require_once APP_DIR . "src/router.php";
 $router = new Router();
+$router->get("/test", function($req, $res) {
+	$res->render("test", ["title"=>"テスト"]);
+});
 $router->get("/", function($req, $res) {
 	$res->render("index", ["title"=>"ホーム"]);
 });
@@ -94,8 +97,25 @@ $router->get("/api/talk", function($req, $res) {
 	$res->json($data);
 });
 $router->get("/login", function($req, $res) {
-	$res->render("login", ["title"=>"ログイン"]);
+	if ( AppUser::getUser() ) {
+		// ログイン済みの場合
+		$res->redirect("/");
+	} else {
+		// ログインまだの場合
+		$res->render("login", ["title"=>"ログイン"]);
+	}
 });
+// 匿名ログイン
+$router->post("/tokumei-login", function($req, $res) {
+	if ( $req->param("nickname") != "" ) {
+		AppUser::setUser([
+			"nickname" => $req->param("nickname"),
+		]);
+		return $res->json(["認証OK"]);
+	}
+	throw new JsonResErrorException("認証エラー");
+});
+// 通常ログイン
 $router->post("/auth", function($req, $res) {
 	if ( $req->param("email") == "yuta.nakamura.i7@gmail.com"
 		&& $req->param("password") == "" ) {
@@ -107,6 +127,11 @@ $router->post("/auth", function($req, $res) {
 try {
 	$router->listen();
 	
+} catch( NotFoundException $e ) {
+	$res = $router->getRes();
+	$res->json([
+		"error" => $e->getMessage(),
+	]);
 } catch( JsonResErrorException $e ) {
 	$res = $router->getRes();
 	$res->json([
