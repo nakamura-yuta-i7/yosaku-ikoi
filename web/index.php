@@ -119,7 +119,11 @@ $router->post("/tokumei-login", function($req, $res) {
 $router->post("/auth", function($req, $res) {
 	if ( $req->param("email") == "yuta.nakamura.i7@gmail.com"
 		&& $req->param("password") == "" ) {
-		return $res->json("認証OK");
+		AppUser::setUser([
+			"nickname" => "ゆうた",
+			"email" => $req->param("email"),
+		]);
+		return $res->json(["認証OK"]);
 	}
 	throw new JsonResErrorException("認証エラー");
 });

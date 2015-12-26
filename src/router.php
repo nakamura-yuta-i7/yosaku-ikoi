@@ -21,6 +21,14 @@ class Router {
 	}
 	function listen() {
 		$path = $this->_req->path();
+		if (
+			$path != "/login/" && 
+			$path != "/auth/" &&  
+			$path != "/tokumei-login/" && 
+			! AppUser::getUser()
+		) {
+			$this->_res->redirect("/login");
+		}
 		foreach ($this->_urls as $url => $callback) {
 			if ( $url == $path ) {
 				return $callback($this->_req, $this->_res);

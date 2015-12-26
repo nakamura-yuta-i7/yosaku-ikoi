@@ -89,7 +89,7 @@ $(function() {
 	
 	// ログイン認証実行
 	$login_form.on("submit", function(e) {
-		e.preventDefault();
+		e.preventDefault()
 		$.ajax({
 			url: "/auth",
 			method: "post",
