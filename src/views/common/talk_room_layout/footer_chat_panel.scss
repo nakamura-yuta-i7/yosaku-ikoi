@@ -1,0 +1,59 @@
+@import "../mixins";
+
+form.footer_chat_panel {
+	margin: 0;
+	padding: 8px;
+	display: table;
+	box-sizing: border-box;
+	width: 100%;
+	
+	border: {
+		top: 1px solid #ccc;
+	}
+	background: {
+		color: #efefef;
+	}
+	
+	> .tr > div {
+		display: table-cell;
+		vertical-align: middle;
+	}
+	.chat-input-area {
+		width:100%;
+		padding:0 8px;
+		
+		textarea {
+			font-size:15px;
+		}
+	}
+	.chat-input {
+		min-height:30px;
+		width:100%;
+		@include border-radius(4px);
+		border: 1px solid #ccc;
+	}
+	.chat-submit {
+		height:30px;
+		min-width: 40px;
+		line-height: 30px;
+		padding:0px;
+	}
+	
+	.btn {
+		cursor: pointer;
+		display: block;
+		padding: 6px;
+		@include border-radius(4px);
+		&:hover {
+			background: #fbfbfb;
+		}
+	}
+	.mdl-menu__item {
+		i {
+			vertical-align: middle;
+		}
+		span {
+			vertical-align: middle;
+		}
+	}
+}

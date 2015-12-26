@@ -1,0 +1,39 @@
+@mixin box_shadow_basic($value: 0px 1px 3px rgba(0, 0, 0, 0.5) ) {
+    -webkit-box-shadow: $value;
+       -moz-box-shadow: $value;
+        -ms-box-shadow: $value;
+            box-shadow: $value;
+}
+@mixin border-radius($radius) {
+  -webkit-border-radius: $radius;
+     -moz-border-radius: $radius;
+      -ms-border-radius: $radius;
+          border-radius: $radius;
+}
+@mixin border-top-left-radius($radius) {
+  -webkit-border-top-left-radius: $radius;
+      -moz-border-radius-topleft: $radius;
+          border-top-left-radius: $radius;
+}
+@mixin border-top-right-radius($radius) {
+  -webkit-border-top-right-radius: $radius;
+      -moz-border-radius-topright: $radius;
+          border-top-right-radius: $radius;
+}
+@mixin border-bottom-right-radius($radius) {
+  -webkit-border-bottom-right-radius: $radius;
+      -moz-border-radius-bottomright: $radius;
+          border-bottom-right-radius: $radius;
+}
+@mixin border-bottom-left-radius($radius) {
+  -webkit-border-bottom-left-radius: $radius;
+      -moz-border-radius-bottomleft: $radius;
+          border-bottom-left-radius: $radius;
+}
+@mixin blur($px: 0) {
+    -webkit-filter: blur(#{$px}px) !important;
+    -ms-filter: blur(#{$px}px) !important;
+    -moz-filter: blur(#{$px}px) !important;
+    filter: url("data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\'><filter id=\'blur\'><feGaussianBlur stdDeviation=\'#{$px}\' /></filter></svg>#blur");
+    filter:progid:DXImageTransform.Microsoft.Blur(PixelRadius='#{$px}');
+}

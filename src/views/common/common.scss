@@ -1,9 +1,17 @@
+@import "mixins";
+
 body, html { padding:0px; margin:0px; }
 body {
 	background: #666;
 	-webkit-text-size-adjust: 100%;
 }
 .pad5-side { padding:0px 5px; }
+.table { display: table; }
+.tr { display: table-row; }
+.td { display: table-cell; }
+.radius2 { @include border-radius(2px); }
+.radius3 { @include border-radius(3px); }
+.radius4 { @include border-radius(4px); }
 
 // -----------------------------------------------------------------------------
 // see: http://google.github.io/material-design-icons/

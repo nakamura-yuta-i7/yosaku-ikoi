@@ -9,7 +9,8 @@ module.exports = [
 		entry: {
 			common: './src/views/common/common.js',
 			login: './src/views/login/login.js',
-			home: './src/views/home/home.js',
+			index: './src/views/index/index.js',
+			talk_room: './src/views/talk_room/talk_room.js',
 		},
 		output: {
 			path: __dirname + "/web/dist",

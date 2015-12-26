@@ -1,0 +1,11 @@
+
+h2 { font-size:13px; color:#333; font-weight: 900; padding:10px; margin:0px; line-height:1em; }
+.content-area {
+	padding:10px;
+	background: {
+		image: url("./background-default.jpg");
+		repeat: no-repeat;
+		attachment: fixed;
+		size: cover;
+	}
+}

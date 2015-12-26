@@ -1,0 +1,26 @@
+$header_width: 44px;
+header {
+	background: #333;
+	
+	h1 {
+		height: $header_width;
+		color:#fff; text-align: center;
+		font-size:15px;
+		font-weight: 900;
+		line-height: 1em;
+		letter-spacing: inherit;
+		box-sizing: border-box;
+		padding:0px; margin:0px;
+		padding-top:14px;
+	}
+}
+.mdl-layout__drawer-button {
+	width:$header_width;
+	height:44px;
+	line-height: 44px;
+	margin:0px;
+	i {
+		margin-top:10px;
+		color: #fff;
+	}
+}
