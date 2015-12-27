@@ -105,6 +105,10 @@ $router->get("/login", function($req, $res) {
 		$res->render("login", ["title"=>"ログイン"]);
 	}
 });
+$router->get("/logout", function($req, $res) {
+	AppUser::clear();
+	$res->redirect("/login");
+});
 // 匿名ログイン
 $router->post("/tokumei-login", function($req, $res) {
 	if ( $req->param("nickname") != "" ) {

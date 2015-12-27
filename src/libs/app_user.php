@@ -10,4 +10,7 @@ class AppUser {
 		}
 		return null;
 	}
+	static function clear() {
+		unset( $_SESSION["user"] );
+	}
 }

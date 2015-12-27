@@ -1,0 +1,82 @@
+@import "../mixins";
+
+.btn-side-panel-open {
+	position: fixed;
+	cursor: pointer;
+	z-index: 101;
+	padding: 6px;
+	top: 4px;
+	margin-left: 6px;
+	&:hover {
+		background: #000;
+		@include border-radius(3px);
+	}
+	i {
+		color: #fff;
+	}
+}
+.side-panel-overlay {
+	display: none;
+	position: fixed;
+	top: 0px;
+	left: 0px;
+	height: 100%;
+	width: 100%;
+	background: #333;
+	opacity: 0.5;
+	z-index: 102;
+}
+
+$side-panel-width: 250px;
+
+.side-panel {
+	position: fixed;
+	top: 0px;
+	left: -$side-panel-width;
+	height: 100%;
+	min-width: $side-panel-width;
+	background: #fff;
+	z-index: 103;
+	@include box_shadow_basic()
+	
+	.menu-cover {
+		background: #333;
+		height: 120px;
+		text-align: center;
+		
+		.yosaku-logo {
+			
+		}
+	}
+	.title {
+		font-size: 18px;
+		padding: 10px;
+	}
+	nav {
+		display: table;
+		width: 100%;
+	}
+	a {
+		padding: 10px;
+		padding-left: 20px;
+		text-align: left;
+		text-decoration: none;
+		display: block;
+		
+		color: #333;
+		&:hover {
+			background: #efefef;
+		}
+		i {
+			vertical-align: middle;
+			margin-right: 12px;
+		}
+		span {
+			vertical-align: middle;
+		}
+	}
+	a.disabled {
+		color: #ccc;
+		cursor: text;
+	}
+}

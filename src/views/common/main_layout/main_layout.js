@@ -1,10 +1,12 @@
 module.exports = class MainLayout {
 	constructor() {
+		let side_panel = require("./side_panel")
+		side_panel.setEvent()
 		this.$html = $(`
 			
 			<div class="container">
+				${side_panel.html}
 				<div class="main-layout">
-						<!--${require("./side_panel")}-->
 						${require("./header")}
 						<main class="content-area">
 						</main>

@@ -14,12 +14,14 @@ module.exports = $(`
 					プロフィールを編集
 				</a>
 			</div>
+			<!-- 
 			<div class="mdl-card__menu">
 				<a href="">
 					<i class="material-icons" title="地図を表示">&#xE55B;</i>
 					地図を表示
 				</a>
 			</div>
+			-->
 		</div>
 		
 	</div>

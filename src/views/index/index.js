@@ -20,6 +20,21 @@ $(function() {
 	}
 })
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 function changeUrlAction(url) {
 	if ( url == "/" ) {
 		let $home = require("./home")
