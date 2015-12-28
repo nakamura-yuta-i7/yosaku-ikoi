@@ -4,6 +4,12 @@
         -ms-box-shadow: $value;
             box-shadow: $value;
 }
+@mixin box-shadow($px: 3px) {
+    -webkit-box-shadow: 0px 1px $px rgba(0, 0, 0, 0.5) ;
+       -moz-box-shadow: 0px 1px $px rgba(0, 0, 0, 0.5) ;
+        -ms-box-shadow: 0px 1px $px rgba(0, 0, 0, 0.5) ;
+            box-shadow: 0px 1px $px rgba(0, 0, 0, 0.5) ;
+}
 @mixin border-radius($radius) {
   -webkit-border-radius: $radius;
      -moz-border-radius: $radius;
@@ -36,4 +42,12 @@
     -moz-filter: blur(#{$px}px) !important;
     filter: url("data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\'><filter id=\'blur\'><feGaussianBlur stdDeviation=\'#{$px}\' /></filter></svg>#blur");
     filter:progid:DXImageTransform.Microsoft.Blur(PixelRadius='#{$px}');
+}
+@mixin under-shadow-gradation() {
+	
+	/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#000000+51,000000+100&0+38,0.5+100 */
+	background: -moz-linear-gradient(top,  rgba(0,0,0,0) 38%, rgba(0,0,0,0.1) 51%, rgba(0,0,0,0.5) 100%); /* FF3.6-15 */
+	background: -webkit-linear-gradient(top,  rgba(0,0,0,0) 38%,rgba(0,0,0,0.1) 51%,rgba(0,0,0,0.5) 100%); /* Chrome10-25,Safari5.1-6 */
+	background: linear-gradient(to bottom,  rgba(0,0,0,0) 38%,rgba(0,0,0,0.1) 51%,rgba(0,0,0,0.5) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00000000', endColorstr='#80000000',GradientType=0 ); /* IE6-9 */
 }

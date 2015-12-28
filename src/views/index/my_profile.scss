@@ -1,3 +1,48 @@
+@import "../common/mixins";
+.my-profile {
+	background: #fff;
+	.cover {
+		background: url(./welcome_card.jpg);
+		background-size: cover;
+		
+		height: 150px;
+		position: relative;
+		
+		.under-shadow{
+			height: 100%;
+			padding: 10px;
+			box-sizing: border-box;
+			@include under-shadow-gradation();
+		}
+		
+		.img {
+			position: absolute;
+			background: #ccc;
+			bottom: 15px;
+			left: 15px;
+			box-sizing: border-box;
+			border: 2px solid #fff;
+			overflow: hidden;
+			width: 80px;
+			height:80px ;
+			text-align: center;
+			margin: auto;
+			@include border-radius(50%);
+			
+			i {
+				font-size: 80px;
+			}
+		}
+		.nickname {
+			font-size: 25px;
+			position: absolute;
+			bottom: 10px;
+			left: 100px;
+			color: #fff;
+		}
+	}
+}
+
 .demo-card-wide.mdl-card {
 	width: 100%;
 	box-sizing: border-box !important;

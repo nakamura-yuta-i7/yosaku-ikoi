@@ -13,6 +13,11 @@ module.exports = {
 				<img class="yosaku-logo" width="90" src="${require("../../login/logo_ikoi.png")}">
 			</div>
 			
+			<div class="close-menu">
+				<i class="material-icons">&#xE14C;</i>
+				<span>閉じる</span>
+			</div>
+			
 			<div class="title">
 				Menu
 			</div>
@@ -35,14 +40,16 @@ module.exports = {
 	`,
 	setEvent: function() {
 		// サイドパネル閉じる
-		$(document).on("click", ".side-panel-overlay", function() {
+		$(document).on("click", ".side-panel-overlay,.close-menu", function() {
 			$(".side-panel-overlay").hide()
 			$(".side-panel").hide()
+			$(".container").removeClass("blur")
 		})
 		// サイドパネル表示
 		$(document).on("click", ".btn-side-panel-open", function() {
 			$(".side-panel-overlay").show()
 			$(".side-panel").css({left:-250}).animate({left:0}, 200).show()
+			$(".container").addClass("blur")
 		})
 	}
 }

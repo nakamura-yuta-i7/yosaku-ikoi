@@ -23,13 +23,11 @@ module.exports = new class NewMember {
 		// ガラスぼかし背景表示
 		let Overlay = require("../../common/parts/overlay/overlay")
 		Overlay.show()
+		// ぼかし背景をクリックしても閉じられる
 		Overlay.$overlay.on("click", () => {
 			this.$form.remove()
 		})
-		$("body").append(this.$form)
-		this.setEvent()
-	}
-	setEvent() {
+		// メンバー登録実行
 		this.$form.on("submit", function(e) {
 			e.preventDefault()
 			$.ajax({
@@ -38,9 +36,18 @@ module.exports = new class NewMember {
 				method: "post",
 				dataType: "json",
 				success: function(data) {
-					console.log( data );
+					if (data.error) {
+						alert(data.error)
+					} else {
+						// 会員登録成功
+						alert("メンバー登録に成功しました。\nログインします。")
+						location.href = ""
+					}
 				}
 			})
 		})
+		this.$form.css({opacity:0})
+		$("body").append( this.$form )
+		this.$form.animate({opacity:1}, 300)
 	}
 }

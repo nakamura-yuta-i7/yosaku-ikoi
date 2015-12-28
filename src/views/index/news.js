@@ -1,14 +1,6 @@
 require("./news.scss")
-module.exports = class News {
+module.exports = new class News {
 	constructor() {
-		this.$news_area = null
-		this.setup()
-		this.load()
-	}
-	getHTML() {
-		return this.$news_area.getHTML()
-	}
-	setup() {
 		this.$news_area = $(`
 			<div class="news-area">
 				<h2>ニュース</h2>
@@ -19,25 +11,35 @@ module.exports = class News {
 			</div>
 		`)
 	}
-	load() {
-		let rows = [
-			1,2,3,4,5,6,7,8,9,10
-		]
-		rows.forEach( (data)=>{
-			let $tr = getTr(data)
-			this.$news_area.find(".news").append( $tr )
-		} )
+	getContent(callback) {
 		
-		function getTr(row) {
-			let datetime = `2015-12-19 11:54`
-			let text = `新規メンバーが加わりました`
-			let $tr = $(`
-				<tr>
-					<td class="datetime">${datetime}</td>
-					<td class="text">${text}</td>
-				</tr>
-			`)
-			return $tr
-		}
+		$.ajax({
+			url: "/api/news",
+			dataType: "json",
+			success: (rows) => {
+				
+				this.$news_area.find(".news").html(null)
+				
+				rows.forEach( (data)=>{
+					let $tr = getTr(data)
+					this.$news_area.find(".news").append( $tr )
+				} )
+				
+				return callback( this.$news_area )
+				
+				function getTr(row) {
+					let datetime = row.created
+					let text = row.message
+					let $tr = $(`
+						<tr>
+							<td class="datetime">${datetime}</td>
+							<td class="text">${text}</td>
+						</tr>
+					`)
+					return $tr
+				}
+			}
+		})
+		
 	}
 }

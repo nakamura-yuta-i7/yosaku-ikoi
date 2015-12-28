@@ -23,6 +23,8 @@ function sendMail($params) {
 		throw new ErrorException("必須項目に漏れがあります。");
 	}
 	
+	extract($params);
+	
 	if ( ! IS_STAGING ) throw new ErrorException("本番環境のメール実装が必要です。");
 	// ───────────────────────────────────
 	// 本番環境のメール送信ロジック
@@ -34,39 +36,40 @@ function sendMail($params) {
 	// 以下は、本番環境以外でのメール送信ロジック
 	// ───────────────────────────────────
 	
-	require dirname(__FILE__) . '/../vendors/PHPMailer/PHPMailerAutoload.php';
-	require dirname(__FILE__) . '/../passwords.php';
+	require_once dirname(__FILE__) . '/../vendors/PHPMailer/PHPMailerAutoload.php';
+	require_once dirname(__FILE__) . '/../passwords.php';
 	$mail = new PHPMailer;
 	$mail->setLanguage('ja');
 
 	//$mail->SMTPDebug = 3;                               // Enable verbose debug output
 
 	$mail->isSMTP();                                      // Set mailer to use SMTP
-	// $mail->Host = 'smtp1.example.com;smtp2.example.com';  // Specify main and backup SMTP servers
 	$mail->Host = "smtp.mail.yahoo.co.jp";
 	$mail->SMTPAuth = true;                               // Enable SMTP authentication
-	// $mail->Username = 'user@example.com';                 // SMTP username
 	$mail->Username = "yuta_nakamura_i7";
-	// $mail->Password = 'secret';                           // SMTP password
 	$mail->Password = SMTP_PASSWORD;
 	$mail->SMTPSecure = 'ssl';                            // Enable TLS encryption, `ssl` also accepted
 	$mail->Port = 465;                                    // TCP port to connect to
 
-	$mail->setFrom('yuta_nakamura_i7@yahoo.co.jp', 'Mailer');
+	$mail->setFrom($from);
 	// $mail->addAddress('joe@example.net', 'Joe User');
-	$mail->addAddress('yuta@gnkmr.com');
-	$mail->addReplyTo('yuta_nakamura_i7@yahoo.co.jp', 'Information');
+	$mail->addAddress($to);
+	if ( isset($replay_to) ) {
+		$mail->addReplyTo($replay_to);
+	} else {
+		$mail->addReplyTo($from);
+	}
 	// $mail->addCC('cc@example.com');
-	// $mail->addBCC('bcc@example.com');
-
+	if ( isset($bcc) ) {
+		$mail->addBCC($bcc);
+	}
 	// $mail->addAttachment('/var/tmp/file.tar.gz');         // Add attachments
 	// $mail->addAttachment('/tmp/image.jpg', 'new.jpg');    // Optional name
+	
 	$mail->isHTML(true);                                  // Set email format to HTML
-
-	$subject = 'こんにちわ、テストメールです';
-	// $mail->Subject = mb_convert_encoding($subject, "ISO-2022-JP","AUTO");
+	
 	$mail->Subject = mb_encode_mimeheader($subject);
-	$mail->Body    = '新規メンバー登録が完了しました。';
+	$mail->Body    = $body;
 	// $mail->AltBody = 'ALTBODYってなんだ？？';
 
 	if( ! $mail->send() ) {

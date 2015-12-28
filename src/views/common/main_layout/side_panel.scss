@@ -1,5 +1,14 @@
 @import "../mixins";
 
+.close-menu {
+	padding: 10px;
+	font-size: 12px;
+	float: right;
+	cursor: pointer;
+	* {
+		vertical-align: middle;
+	}
+}
 .btn-side-panel-open {
 	position: fixed;
 	cursor: pointer;
@@ -18,6 +27,7 @@
 .side-panel-overlay {
 	display: none;
 	position: fixed;
+	cursor: pointer;
 	top: 0px;
 	left: 0px;
 	height: 100%;

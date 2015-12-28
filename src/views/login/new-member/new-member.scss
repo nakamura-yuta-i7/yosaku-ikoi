@@ -2,6 +2,7 @@
 
 form.new-member {
 	@include border-radius(4px);
+	@include box-shadow();
 	
 	width: 300px;
 	max-height: 330px;

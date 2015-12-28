@@ -8,13 +8,27 @@ class SqliteAbstract {
 		$this->table = $table;
 	}
 	public $pdo = null;
+	private static $_connection = null;
 	function __construct($dsn) {
 		$this->setTable();
+		if ( ! is_null(self::$_connection) ) {
+			return $this->pdo = self::$_connection;
+		}
 		$this->pdo = new PDO(
 			"sqlite:" . $dsn
 		);
 		$this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 		$this->pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+		self::$_connection = $this->pdo;
+	}
+	function beginTransaction() {
+		$this->pdo->beginTransaction();
+	}
+	function commit() {
+		$this->pdo->commit();
+	}
+	function rollBack() {
+		$this->pdo->rollBack();
 	}
 	function query($sql) {
 // echo "<pre>query():<br>"; echo $sql; echo "</pre>";
@@ -31,6 +45,9 @@ class SqliteAbstract {
 		return $this->stmt->fetchAll();
 	}
 	function insert($values) {
+		if ( ! array_key_exists("created", $values) ) {
+			$values["created"] = date_create()->format("Y-m-d H:i:s");
+		}
 		$columns = [];
 		$vals = [];
 		foreach ($values as $key => $value) {

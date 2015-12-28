@@ -16,7 +16,8 @@ body {
 .radius2 { @include border-radius(2px); }
 .radius3 { @include border-radius(3px); }
 .radius4 { @include border-radius(4px); }
-.blur { @include blur(5); }
+.blur { @include blur(10); }
+.shadow { @include box_shadow_basic(); }
 
 .mdl-data-table {
 	td, th {

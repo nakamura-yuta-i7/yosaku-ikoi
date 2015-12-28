@@ -42,7 +42,7 @@ module.exports = class Members {
 							<td class="name">
 								<span class="nickname">${member.nickname}</span>
 								<br>
-								<span class="fullname">${member.name}</span>
+								<span class="fullname">${member.fullname}</span>
 							</td>
 							<td class="message">${member.message}</td>
 						</tr>

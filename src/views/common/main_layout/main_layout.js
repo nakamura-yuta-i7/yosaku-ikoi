@@ -4,8 +4,9 @@ module.exports = class MainLayout {
 		side_panel.setEvent()
 		this.$html = $(`
 			
+			${side_panel.html}
+			
 			<div class="container">
-				${side_panel.html}
 				<div class="main-layout">
 						${require("./header")}
 						<main class="content-area">

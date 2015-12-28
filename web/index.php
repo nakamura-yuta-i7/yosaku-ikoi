@@ -22,6 +22,13 @@ $router->get("/talk_room", function($req, $res) {
 	}
 	$res->render("talk_room", [ "title"=>getTalkRoom($id)["title"] ]);
 });
+$router->get("/api/me", function($req, $res) {
+	$res->json( AppUser::getUser() );
+});
+$router->get("/api/news", function($req, $res) {
+	$news = new News();
+	$res->json( $news->getLatests() );
+});
 $router->get("/api/messages", function($req, $res) {
 	$id = $req->param("talk_room_id");
 	function getUser() {
@@ -66,11 +73,8 @@ $router->get("/setting", function($req, $res) {
 	$res->render("index", ["title"=>"せってい"]);
 });
 $router->get("/api/members", function($req, $res) {
-	$members = [
-		[ "email" => "yuta.nakamura.i7@gmail.com", "name" => "中村 ゆうた", "nickname" => "ゆうた" ],
-		[ "email" => "yuta@gnkmr.com", "name" => "ゆうた なかむら", "nickname" => "gnkmr" ],
-	];
-	$res->json($members);
+	$users = new Users();
+	$res->json($users->findAll());
 });
 $router->get("/api/setting", function($req, $res) {
 	$data = [
@@ -121,8 +125,14 @@ $router->get("/logout", function($req, $res) {
 // 匿名ログイン
 $router->post("/tokumei-login", function($req, $res) {
 	if ( $req->param("nickname") != "" ) {
+		$nickname = $req->param("nickname");
 		AppUser::setUser([
-			"nickname" => $req->param("nickname"),
+			"nickname" => $nickname,
+		]);
+		// 匿名ログインをニュースに追加
+		$news = new News();
+		$news->insert([
+			"message" => "匿名ユーザー「{$nickname}」さんがログインしました。",
 		]);
 		return $res->json(["認証OK"]);
 	}
@@ -136,8 +146,13 @@ $router->post("/auth", function($req, $res) {
 		"password" => md5($req->param("password")),
 	]);
 	if ( $user ) {
-		unset($user["password"]);
 		AppUser::setUser($user);
+		// 匿名ログインをニュースに追加
+		$nickname = $user["nickname"];
+		$news = new News();
+		$news->insert([
+			"message" => "メンバー「{$nickname}」さんがログインしました。",
+		]);
 		return $res->json(["認証OK"]);
 	}
 	throw new JsonResErrorException("認証エラー");
