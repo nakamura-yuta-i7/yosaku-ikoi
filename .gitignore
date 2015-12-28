@@ -11,3 +11,6 @@ bower_components/
 
 # for webpack
 web/dist/
+
+# for application
+passwords.php
