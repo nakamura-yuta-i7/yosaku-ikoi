@@ -36,10 +36,10 @@ $(function() {
 				<input type="submit" value="ログイン">
 			</div>
 			
-			<div class="entry-new-member">
-				<a href="">メンバー登録</a>
+			<div class="login-other-menu">
+				<a href="" class="entry-new-member">メンバー登録</a>
 				|
-				<a href="">パスワードを忘れた場合</a>
+				<a href="" class="password-lost">パスワードを忘れた場合</a>
 			</div>
 			
 			<div class="comment">
@@ -58,6 +58,17 @@ $(function() {
 	$layout.append($login_form)
 	$("body").append($layout)
 	
+	
+	
+	// メンバー登録リンククリックした時
+	let $link_new_member = $(".entry-new-member")
+	$link_new_member.on("click", function(e) {
+		e.preventDefault()
+		
+		// 登録フォーム表示
+		let NewMemberForm = require("./new-member/new-member")
+		NewMemberForm.render()
+	})
 	
 	
 	// 特定ログイン

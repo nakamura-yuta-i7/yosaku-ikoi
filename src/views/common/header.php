@@ -15,5 +15,7 @@
 	<script src="/dist/init.js"></script>
 	<link rel="stylesheet" href="/dist/common.css">
 	<script src="/dist/common.js"></script>
+	<!-- Blur -->
+	<script src="/bower_components/Blur.js/dist/jquery.blur.js"></script>
 </head>
 <body>

@@ -7,6 +7,7 @@ $color-error: $yosaku-orange;
 	width: 100%;
 	max-width: 500px;
 	margin: 0 auto;
+	box-sizing: border-box;
 	
 	padding-top: 40px;
 	
@@ -19,7 +20,7 @@ $color-error: $yosaku-orange;
 		display: block;
 		margin-bottom: 27px;
 	}
-	.entry-new-member {
+	.login-other-menu {
 		font-size:12px;
 		padding: 1em 0;
 	}

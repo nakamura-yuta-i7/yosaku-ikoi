@@ -23,6 +23,7 @@ class Router {
 		$path = $this->_req->path();
 		if (
 			$path != "/login/" && 
+			$path != "/login/new-member/" && 
 			$path != "/auth/" &&  
 			$path != "/tokumei-login/" && 
 			! AppUser::getUser()

@@ -105,6 +105,15 @@ $router->get("/login", function($req, $res) {
 		$res->render("login", ["title"=>"ログイン"]);
 	}
 });
+$router->get("/login/new-member", function($req, $res) {
+	try {
+		$users = new Users();
+		$users->regist( $req->params() );
+		$res->json(["success"]);
+	} catch (Exception $e) {
+		throw new JsonResErrorException($e->getMessage());
+	}
+});
 $router->get("/logout", function($req, $res) {
 	AppUser::clear();
 	$res->redirect("/login");
@@ -121,12 +130,14 @@ $router->post("/tokumei-login", function($req, $res) {
 });
 // 通常ログイン
 $router->post("/auth", function($req, $res) {
-	if ( $req->param("email") == "yuta.nakamura.i7@gmail.com"
-		&& $req->param("password") == "" ) {
-		AppUser::setUser([
-			"nickname" => "ゆうた",
-			"email" => $req->param("email"),
-		]);
+	$users = new Users();
+	$user = $users->findOne([
+		"email" => $req->param("email"),
+		"password" => md5($req->param("password")),
+	]);
+	if ( $user ) {
+		unset($user["password"]);
+		AppUser::setUser($user);
 		return $res->json(["認証OK"]);
 	}
 	throw new JsonResErrorException("認証エラー");
