@@ -19,6 +19,7 @@ body {
 .radius4 { @include border-radius(4px); }
 .blur { @include blur(10); }
 .shadow { @include box_shadow_basic(); }
+.hidden { display:none; }
 
 .mdl-data-table {
 	td, th {

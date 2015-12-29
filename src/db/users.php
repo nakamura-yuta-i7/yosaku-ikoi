@@ -2,6 +2,15 @@
 require_once dirname(__FILE__) . "/yosaku_ikoi_abstract.php";
 class Users extends YosakuIkoiAbstract {
 	
+	// user_id をキーに全ユーザーを返す
+	function getAll() {
+		$users = [];
+		foreach ( $this->findAll() as $user ) {
+			$users[$user["id"]] = $user;
+		}
+		return $users;
+	}
+	
 	// 新規メンバー登録ロジック
 	function regist(Array $user_data) {
 		$data = $user_data;

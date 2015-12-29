@@ -1,5 +1,4 @@
 require("./header.scss")
-
 module.exports = {
 	html: `
 		<header class="table">
@@ -10,7 +9,7 @@ module.exports = {
 					</div>
 				</div>
 				<div class="td title">
-					テストトーク１
+					${global.talk_title}
 				</div>
 				<div class="td">
 					<!-- アルバムメニュー -->

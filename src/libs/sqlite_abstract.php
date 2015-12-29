@@ -21,6 +21,9 @@ class SqliteAbstract {
 		$this->pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
 		self::$_connection = $this->pdo;
 	}
+	function getLastInsertId() {
+		return $this->pdo->lastInsertId();
+	}
 	function beginTransaction() {
 		$this->pdo->beginTransaction();
 	}
@@ -31,7 +34,6 @@ class SqliteAbstract {
 		$this->pdo->rollBack();
 	}
 	function query($sql) {
-// echo "<pre>query():<br>"; echo $sql; echo "</pre>";
 		$this->stmt = $this->pdo->query($sql);
 		return $this;
 	}
@@ -52,7 +54,9 @@ class SqliteAbstract {
 		$vals = [];
 		foreach ($values as $key => $value) {
 			$colums[] = $key;
-			if ( ! is_int($value) ) {
+			if ( is_null($value) ) {
+				$value = "NULL";
+			} else if ( ! is_int($value) ) {
 				$value = "'{$value}'";
 			}
 			$vals[] = $value;

@@ -1,6 +1,7 @@
 <html>
 <head>
 	<title><?php echo $title ?> : 良作 憩いの掲示板</title>
+	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no">
 	
 	<!-- JQuery -->

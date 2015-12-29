@@ -1,7 +1,9 @@
 require("./footer_chat_panel.scss")
+
 module.exports = {
 	html: `
 		<form class="footer_chat_panel">
+			<input type="hidden" name="talk_id" value="${global.talk_id}">
 			<div class="tr">
 				<div>
 					<span class="btn btn-add mdl-js-button" href="#" id="demo-menu-top-left">
@@ -9,8 +11,8 @@ module.exports = {
 					</span>
 					<!-- メディア追加メニュー -->
 					<ul class="mdl-menu mdl-menu--top-left mdl-js-menu mdl-js-ripple-effect"
-					    for="demo-menu-top-left">
-					  <li class="mdl-menu__item">
+							for="demo-menu-top-left">
+						<li id="upload-image" class="mdl-menu__item">
 							<i class="material-icons">&#xE3B6;</i>
 							<span>画像を追加</span>
 						</li>
@@ -18,7 +20,7 @@ module.exports = {
 							<i class="material-icons">&#xE3B6;</i>
 							<span>画像を加工してから追加</span>
 						</li>
-					  <li disabled class="mdl-menu__item">
+						<li disabled class="mdl-menu__item">
 							<i class="material-icons">&#xE064;</i>
 							<span>動画を追加</span>
 						</li>
@@ -34,7 +36,7 @@ module.exports = {
 					</span>
 					<!-- 絵文字メニューパネル -->
 					<div class="mdl-menu mdl-menu--top-left mdl-js-menu mdl-js-ripple-effect"
-					    for="open-emotion-menu">
+							for="open-emotion-menu">
 							<div class="" style="padding:10px; white-space:nowrap;">
 								Comming Soon...
 							</div>
@@ -53,27 +55,109 @@ module.exports = {
 		</form>
 	`,
 	setEventListener: function() {
+		
+		// ==========================
+		// チャットメッセージ送信
+		// ==========================
 		$("form.footer_chat_panel").on("submit", function(e) {
 			e.preventDefault()
-			console.log( $(this).serialize() );
+			$.ajax({
+				url: "/api/messages/add",
+				data: $(this).serialize(),
+				method: "post",
+				dataType: "json",
+				success: function(data) {
+					if (data.error) return alert(data.error)
+					// 投稿したデータがかえってくる
+					let $message = new (require("../../talk_room/talk_room_message"))(data).getContent()
+					TalkRoom.layout.addContent( $message )
+					$(".chat-input").val("")
+				}
+			})
 		})
+		
+		// ==========================
+		// 画像アップロード
+		// ==========================
+		$("#upload-image").on("click", function(e) {
+			let form_id = "upload-image-form"
+			$("#"+form_id).remove()
+			let $form = $(`
+				<form id="${form_id}" class="hidden">
+					<input type="hidden" name="yuta" value="tst">
+					<input type="file" name="image">
+				</form>
+			`)
+			$("body").append($form)
+			$form.on("submit", function(e) {
+				e.preventDefault()
+				var formData = new FormData($form[0]);
+				$.ajax({
+					url: "/api/messages/image/add",
+					method: "post",
+					data: formData,
+					contentType: false,
+					processData: false,
+					xhr: function() {  // Custom XMLHttpRequest
+						var myXhr = $.ajaxSettings.xhr();
+						if( myXhr.upload ){ // Check if upload property exists
+								myXhr.upload.addEventListener(
+									'progress',
+									progressHandlingFunction, false); // For handling the progress of the upload
+						}
+						function progressHandlingFunction() {
+							console.log( "progress arguments", arguments );
+						}
+						return myXhr;
+					},
+					sucess: function(data) {
+						 console.log( "SUCCESS", data );
+					},
+					error: function() {
+						console.log("ERROR", arguments);
+						alert("ERROR.  管理者に連絡してください...")
+					},
+				})
+				$form.remove()
+			})
+			$form.find("[name=image]").on("change", function() {
+				console.log( "KOKO!" );
+				$form.trigger("submit")
+			})
+			$form.find("[name=image]").trigger("click")
+		})
+		
+		
+		// ==========================
 		// メッセージ入力エリアはEnterで可変
-		$(".chat-input").on("keypress", function(e) {
+		// ==========================
+		$(".chat-input").on("keypress, keydown", function(e) {
 			let keynum = 0;
 			// IE
 			if(window.event) {
 				keynum = e.keyCode;
 			// Netscape/Firefox/Opera
-			} else if(e.which) {
+			} else if (e.which) {
 				keynum = e.which;
+			} else {
+				console.log( "!?" );
 			}
-
+			
+			let row_count = Number( $(this).attr("rows") )
+			let text_br_count = $(this).val().split("\n").length
+			// console.log( "テキストの行数", text_br_count );
+			// console.log( "row_count", row_count );
+			
 			if( keynum == 13 ) { // Enter
-				console.log( $(this) );
-				if( 3 <= $(this).attr("rows") ) {
-					return;
-				}else{
-					$(this).attr("rows", Number($(this).attr("rows")) + 1 )
+				// console.log( "Enter" );
+				if( 3 >= text_br_count ) {
+					$(this).attr("rows", Number(row_count) + 1 )
+				}
+			}
+			if( keynum == 8 || keynum == 46 ) { // Backspace or Delete
+				// console.log( "Del or Bks" );
+				if( text_br_count < row_count ) {
+					$(this).attr("rows", Number(row_count) - 1 )
 				}
 			}
 		})

@@ -10,7 +10,7 @@ module.exports = [
 			common: './src/views/common/common.js',
 			login: './src/views/login/login.js',
 			index: './src/views/index/index.js',
-			talk_room: './src/views/talk_room/talk_room.js',
+			talk_room: './src/views/talk_room/index.js',
 		},
 		output: {
 			path: __dirname + "/web/dist",

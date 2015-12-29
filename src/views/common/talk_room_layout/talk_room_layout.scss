@@ -1,19 +1,35 @@
-h2 { font-size:13px; color:#333; font-weight: 900; padding:10px; margin:0px; line-height:1em; }
-.content-area {
-	padding:10px;
-	
-	position: fixed;
+.container {
+	position: relative;
+	background: #efefef;
 	width: 100%;
 	max-width: 500px;
-	box-sizing: border-box;
+	margin:0px auto;
 	
-	overflow: scroll;
-	-webkit-overflow-scrolling: touch;
+	h2 {
+		font-size: 13px;
+		color: #333;
+		font-weight: 900;
+		padding: 10px;
+		margin: 0;
+		line-height: 1em;
+	}
 	
-	background: {
-		image: url("./background-default.jpg");
-		repeat: no-repeat;
-		attachment: fixed;
-		size: cover;
+	.content-area {
+		padding:10px;
+		
+		position: fixed;
+		width: 100%;
+		max-width: 500px;
+		box-sizing: border-box;
+		
+		overflow: scroll;
+		-webkit-overflow-scrolling: touch;
+		
+		background: {
+			image: url("./background-default.jpg");
+			repeat: no-repeat;
+			attachment: fixed;
+			size: cover;
+		}
 	}
 }

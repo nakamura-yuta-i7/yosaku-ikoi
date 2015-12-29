@@ -11,21 +11,7 @@ module.exports = class TalkRoomLayout {
 				</main>
 				${this.chat_panel.html}
 			</div>
-			
-			<style>
-			.container {
-				position: relative;
-				background: #efefef;
-				width: 100%;
-				max-width: 500px;
-				margin:0px auto;
-			}
-			</style>
 		`)
-	}
-	setContent(html) {
-		this.$layout.find(".content-area").append(html)
-		return this
 	}
 	render() {
 		$("body").append(this.$layout)
@@ -38,8 +24,10 @@ module.exports = class TalkRoomLayout {
 		this.chat_panel.setEventListener()
 		this.header.setEventListener()
 	}
-	addContent(html) {
-		this.$layout.find(".content-area").append(html)
+	addContent( $html ) {
+		this.$layout.find(".content-area").append( $html )
+		// 追加したら画面下までスクロール
+		$("main").delay(100).animate( {scrollTop: $("main").get(0).scrollHeight }, 700 )
 		return this
 	}
 }
