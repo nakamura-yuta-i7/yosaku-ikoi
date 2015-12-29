@@ -98,15 +98,16 @@ module.exports = {
 					data: formData,
 					contentType: false,
 					processData: false,
-					xhr: function() {  // Custom XMLHttpRequest
+					xhr: function() {
 						var myXhr = $.ajaxSettings.xhr();
-						if( myXhr.upload ){ // Check if upload property exists
+						if( myXhr.upload ){
 								myXhr.upload.addEventListener(
 									'progress',
-									progressHandlingFunction, false); // For handling the progress of the upload
+									progressHandlingFunction, false);
 						}
-						function progressHandlingFunction() {
-							console.log( "progress arguments", arguments );
+						function progressHandlingFunction(data) {
+							let per = ( data.loaded / data.total ) * 100
+							console.log( per );
 						}
 						return myXhr;
 					},

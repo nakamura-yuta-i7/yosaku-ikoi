@@ -1,15 +1,21 @@
 <?php
 
 function decamelize($word) {
-  return preg_replace(
-    '/(^|[a-z])([A-Z])/e', 
-    'strtolower(strlen("\\1") ? "\\1_\\2" : "\\2")',
-    $word 
-  ); 
+	return preg_replace(
+		'/(^|[a-z])([A-Z])/e', 
+		'strtolower(strlen("\\1") ? "\\1_\\2" : "\\2")',
+		$word 
+	); 
 }
 
 function camelize($word) { 
-  return preg_replace('/(^|_)([a-z])/e', 'strtoupper("\\2")', $word); 
+	return preg_replace('/(^|_)([a-z])/e', 'strtoupper("\\2")', $word); 
+}
+
+function formatBytes($size, $precision = 2) {
+	$base = log($size, 1024);
+	$suffixes = array('', 'k', 'M', 'G', 'T');
+	return round(pow(1024, $base - floor($base)), $precision) . $suffixes[floor($base)];
 }
 
 function sendMail($params) {

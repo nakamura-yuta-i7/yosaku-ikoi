@@ -59,6 +59,11 @@ $router->post("/api/messages/add", function($req, $res) {
 	$res->json( $data );
 });
 $router->post("/api/messages/image/add", function($req, $res) {
+	require_once APP_DIR . "src/libs/upload_file_ope.php";
+	$file = new UploadFileOpe($_FILES["image"]);
+	$file->start();
+	$path = $file->getUploadedPath();
+	
 	$res->json( array_merge($req->params(), $_FILES) );
 });
 # 自分自身の情報
