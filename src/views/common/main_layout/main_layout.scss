@@ -1,0 +1,19 @@
+.container {
+	width: 100%;
+	max-width: 500px;
+	margin: 0px auto;
+	-webkit-overflow-scrolling: touch;
+}
+.main-layout {
+	position: fixed;
+	width: 100%;
+	max-width: 500px;
+	top: 44px;
+	background: #efefef;
+}
+.content-area {
+	width: 100%;
+	max-width: 500px;
+	overflow: scroll;
+}
+h2 { font-size:13px; color:#333; font-weight: 900; padding:10px; margin:0px; line-height:1em; }

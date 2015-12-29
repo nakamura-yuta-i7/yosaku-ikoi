@@ -83,7 +83,7 @@ $router->get("/api/setting", function($req, $res) {
 	];
 	$res->json($data);
 });
-$router->get("/api/talk", function($req, $res) {
+$router->get("/api/talk/list", function($req, $res) {
 	$data = [
 		[ "id"=>1, "title" => "トーク1", "last_message" => "テストメッセージ テストメッセージ テストメッセージ テストメッセージ", "last_updated" => date_create()->format("Y/m/d H:i:s") ],
 		[ "id"=>1, "title" => "トーク2", ],
@@ -98,7 +98,20 @@ $router->get("/api/talk", function($req, $res) {
 		[ "id"=>1, "title" => "トーク11", ],
 		[ "id"=>1, "title" => "トーク12", ],
 	];
+	$talks = new Talks();
+	$data = $talks->getAll();
 	$res->json($data);
+});
+$router->get("/api/talk/create", function($req, $res) {
+	$title = $req->param("title");
+	if ( ! $title ) {
+		throw new JsonResErrorException("トーク名を入力してください。");
+	}
+	$talks = new Talks();
+	$talks->insert([
+		"title" => $title,
+	]);
+	$res->json(["success"]);
 });
 $router->get("/login", function($req, $res) {
 	if ( AppUser::getUser() ) {

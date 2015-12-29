@@ -11,3 +11,5 @@ require_once APP_DIR . "src/libs/app_user.php";
 
 require_once APP_DIR . "src/db/users.php";
 require_once APP_DIR . "src/db/news.php";
+require_once APP_DIR . "src/db/talks.php";
+require_once APP_DIR . "src/db/messages.php";

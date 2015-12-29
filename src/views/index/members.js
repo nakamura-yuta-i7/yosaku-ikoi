@@ -35,7 +35,7 @@ module.exports = class Members {
 					let img = ( member.img ? 
 						`<i class="material-icons">&#xE7FD;</i>` :
 						`<i class="material-icons">&#xE7FD;</i>`
-					 )
+					)
 					let $tr = $(`
 						<tr>
 							<td class="img">${img}</td>

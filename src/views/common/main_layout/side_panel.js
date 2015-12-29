@@ -26,6 +26,11 @@ module.exports = {
 					<i class="material-icons">&#xE8A7;</i>
 					<span>マイメディア</span>
 				</a>
+				<a href="http://yosaku.info/turing/2008-7/IKOI/" target="_blank">
+					<i class="material-icons">&#xE069;</i>
+					<span>旧：憩いの掲示板</span>
+					<i class="material-icons" style="font-size:15px;">&#xE89E;</i>
+				</a>
 				<a href="http://yosaku.info/" target="_blank" class="">
 					<i class="material-icons">&#xE91B;</i>
 					<span>良作HP</span>

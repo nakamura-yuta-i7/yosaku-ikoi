@@ -9,6 +9,7 @@ body {
 	background: #666;
 	-webkit-text-size-adjust: 100%;
 }
+.color-orange { @include color-orange(); }
 .pad5-side { padding:0px 5px; }
 .table { display: table; }
 .tr { display: table-row; }

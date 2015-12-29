@@ -1,41 +1,68 @@
 void function initGlobal(global) {
 	global.Me = {}
+	global.changeUrlAction = changeUrlAction;
 }(window)
 
-let MainLayout = require("../common/main_layout/main_layout")
-let layout = new MainLayout()
+let layout = require("../common/main_layout/main_layout")
 let $progress_bar = $(`<div id="p2" class="mdl-progress mdl-js-progress mdl-progress__indeterminate"></div>`)
 
 $(function() {
+	// リソースの読み込みが完了したら
+	
+	// レイアウトレンダリング
 	$("body").append( layout.$html )
 	
+	// コンテンツエリア(ヘッダー／フッターに挟まれたエリア)の高さをあわせる
 	void function adjustHeight() {
-		// コンテンツエリアの高さをあわせる
 		let height = $("body").height() - $("header").height() - $(".footer_navi").height()
 		layout.$html.find(".content-area").height( height )
 	}()
 	
-	changeUrlAction(location.pathname)
+	// ルーティング設定
+	setRouting()
+})
+
+function setRouting() {
+	// 最初にアクセスした時／リロードした時にページ読み込み用
+	changeUrlAction()
 	
 	// ブラウザの戻るで遷移してきた場合
 	if ( window.history && window.history.pushState ) {
 		$(window).on("popstate",function(event){
-			changeUrlAction(location.pathname)
+			console.log( "popstate event", arguments );
+			
+			changeUrlAction()
 		})
 	}
-})
-
-function changeUrlAction(url) {
 	
+	// URLをpushstateで変化した場合検知
+	(function(history){
+		window.history.onpushstate = function() {
+			changeUrlAction()
+		}
+		var pushState = history.pushState;
+		history.pushState = function(state, title, url) {
+			console.log( "pushstate event", arguments )
+			pushState.apply(history, arguments)
+			
+			if (typeof history.onpushstate == "function") {
+				console.log( "onpushstate", state )
+				history.onpushstate({state: state})
+			}
+		}
+	})(window.history)
+}
+
+function changeUrlAction() {
+	let url = location.pathname
 	// 一度コンテンツを空にする
 	layout.$area.html(null)
 	
 	// プログレスバーを最初に表示
 	layout.$area.append( $progress_bar )
 	
-	setTimeout(change, 500)
-	
-	function change() {
+	setTimeout(function() {
+		
 		if ( url == "/" ) {
 			let Home = require("./home")
 			Home.getContent(function($content) {
@@ -58,20 +85,13 @@ function changeUrlAction(url) {
 			})
 		}
 		if ( url == "/setting" ) {
-			let Members = require("./members")
-			new Members().getContent(function($content) {
+			let settings = require("./settings")
+			settings.getContent(function($content) {
 				layout.setContent( $content )
 				document.title = "せってい : 良作 憩いの掲示板"
 			})
 		}
 		layout.resetScrollTop()
-	}
+		
+	}, 500)
 }
-
-let $footer_navi = layout.$html.find(".footer_navi")
-$footer_navi.find("a").on("click", function(e) {
-	let url = $(this).attr("href")
-	history.pushState(null, null, url)
-	changeUrlAction(url)
-	e.preventDefault()
-})

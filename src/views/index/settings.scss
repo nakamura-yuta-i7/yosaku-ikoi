@@ -1,0 +1,12 @@
+@import "../common/mixins";
+
+.settings {
+	.panel {
+		background: #fff;
+		position: relative;
+		min-height: 100px;
+		width: 100%;
+		@include border-radius(2px);
+		@include box-shadow();
+	}
+}

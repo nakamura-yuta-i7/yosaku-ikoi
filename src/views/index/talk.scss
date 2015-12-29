@@ -29,11 +29,20 @@
 		border-bottom: 1px solid #ccc;
 		text-decoration: none;
 		
+		&:hover {
+			@include color-orange();
+		}
+		
 		.icon-area {
 			width: 80px;
 			text-align: center;
 			vertical-align: middle;
 			i { font-size: 35px; }
+			.mdl-badge {
+				position: absolute;
+				margin-left: 25px;
+				margin-top: 5px;
+			}
 		}
 		.detail {
 			vertical-align: middle;

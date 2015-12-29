@@ -17,15 +17,17 @@ module.exports = class Dialog {
 					width: 100%;
 					height: 100%;
 					background: #000;
-					opacity: 0.5;
+					opacity: 0.3;
 				}
 				</style>
 			</div>
 		`).on("click", function() {
 			$(this).remove()
 			self.$dialog.remove()
+			$(".container").removeClass("blur")
 		})
 		$("body").append( $overlay )
+		$(".container").addClass("blur")
 	}
 	renderDialog($content) {
 		this.$dialog = $(`
