@@ -37,12 +37,28 @@ class SqliteAbstract {
 		$this->stmt = $this->pdo->query($sql);
 		return $this;
 	}
+	function save($values, Array $conditions) {
+		$foundRows = $this->findAll(compact("conditions"));
+		if ( count($foundRows) > 1 ) {
+			throw new ErrorException("save() condition error.  because: foundRows > 1 ");
+		}
+		if ( count($foundRows) == 1 ) {
+			$this->update($values, $conditions);
+		} else {
+			$this->insert($values);
+		}
+	}
 	function fetchAll() {
 		return $this->stmt->fetchAll();
 	}
 	function findAll($params=[]) {
+		$where = "";
+		if ( array_key_exists("conditions", $params) ) {
+			$conditions = $params["conditions"];
+			$where = "WHERE " . static::_createWhere($conditions);
+		}
 		$table = $this->table;
-		$sql = "SELECT * FROM {$table}";
+		$sql = "SELECT * FROM {$table} {$where}";
 		$this->query($sql);
 		return $this->stmt->fetchAll();
 	}

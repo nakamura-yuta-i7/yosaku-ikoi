@@ -7,6 +7,16 @@ module.exports = new class News {
 				<div class="pad5-side">
 					<table class="news mdl-data-table mdl-shadow--2dp">
 					</table>
+					
+					<div class="panel content-center">
+						<button
+							class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored"
+							onclick="javascript:alert('まだ未実装です');"
+							>
+							過去のニュース一覧を見る(comming soon)
+						</button>
+					</div>
+					
 				</div>
 			</div>
 		`)

@@ -135,6 +135,17 @@ $router->get("/login", function($req, $res) {
 		$res->render("login", ["title"=>"ログイン"]);
 	}
 });
+// パスワードリセット
+$router->get("/login/password-reset", function($req, $res) {
+	try {
+		$users = new Users();
+		$users->resetPassword( $req->params() );
+		$res->json(["success"]);
+	} catch (Exception $e) {
+		throw new JsonResErrorException($e->getMessage());
+	}
+});
+// メンバー登録
 $router->get("/login/new-member", function($req, $res) {
 	try {
 		$users = new Users();
@@ -144,6 +155,7 @@ $router->get("/login/new-member", function($req, $res) {
 		throw new JsonResErrorException($e->getMessage());
 	}
 });
+// ログアウト
 $router->get("/logout", function($req, $res) {
 	AppUser::clear();
 	$res->redirect("/login");
@@ -162,7 +174,7 @@ $router->post("/tokumei-login", function($req, $res) {
 		]);
 		return $res->json(["認証OK"]);
 	}
-	throw new JsonResErrorException("認証エラー");
+	throw new JsonResErrorException("ニックネームを入力してください。");
 });
 // 通常ログイン
 $router->post("/auth", function($req, $res) {

@@ -24,6 +24,7 @@ class Router {
 		if (
 			$path != "/login/" && 
 			$path != "/login/new-member/" && 
+			$path != "/login/password-reset/" &&
 			$path != "/auth/" &&  
 			$path != "/tokumei-login/" && 
 			! AppUser::getUser()

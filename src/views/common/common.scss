@@ -9,6 +9,7 @@ body {
 	background: #666;
 	-webkit-text-size-adjust: 100%;
 }
+
 .color-orange { @include color-orange(); }
 .pad5-side { padding:0px 5px; }
 .table { display: table; }
@@ -23,6 +24,14 @@ body {
 .clear { clear: both; }
 .left { float:left; }
 .right { float:right; }
+.content-center { text-align: center; }
+.panel {
+	@include border-radius(2px);
+	@include box_shadow_basic();
+	padding: 10px;
+	margin-bottom: 10px;
+	background: #fff;
+}
 
 .mdl-data-table {
 	td, th {

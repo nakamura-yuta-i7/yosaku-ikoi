@@ -15,9 +15,9 @@ class Talks extends YosakuIkoiAbstract {
 		];
 		$field_strings = implode(",\n", $fields);
 		$fields_wrap = [
-			"id",
-			"title",
-			"created",
+			"talks_wrap.id",
+			"talks_wrap.title",
+			"talks_wrap.created",
 			"IFNULL( talks_wrap.last_updated, talks_wrap.created ) AS last_updated",
 			"IFNULL( talks_wrap.last_message, 'まだメッセージがありません' ) AS last_message",
 		];
@@ -48,6 +48,7 @@ class Talks extends YosakuIkoiAbstract {
 			$rows = array_map(function($row) use ($messages) {
 				$ids = $messages->getUnreadCountInTalkRoom(
 					$talk_id = $row["id"],
+					$user_id = AppUser::get("id"),
 					$last_login_time = AppUser::get("last_login_time")
 				);
 				$row["unread_count"] = count($ids);

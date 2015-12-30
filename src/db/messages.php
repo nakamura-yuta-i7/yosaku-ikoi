@@ -29,9 +29,21 @@ class Messages extends YosakuIkoiAbstract {
 		$this->query($sql);
 		$rows = $this->fetchAll();
 		
+		# メンバーログイン中であれば
+		# 取得したメッセージは既読テーブルに記録する
+		if ( AppUser::isMember() ) {
+			$model = new UserReadMessageIds();
+			$user_id = AppUser::get("id");
+			foreach ($rows as $row) {
+				$message_id = $row["id"];
+				$values = compact("user_id", "message_id");
+				$conditions = $values;
+				$model->save($values, $conditions);
+			}
+		}
 		return $this->extendData($rows);
 	}
-	function getUnreadCountInTalkRoom($talk_id, $last_login_time) {
+	function getUnreadCountInTalkRoom($talk_id, $user_id, $last_login_time) {
 		if ( ! $talk_id ) {
 			throw new ErrorException("パラメータが不正です。  arguments:", var_export(func_get_args(), true));
 		}
@@ -44,7 +56,7 @@ class Messages extends YosakuIkoiAbstract {
 				mes.id
 			FROM messages AS mes
 			LEFT JOIN user_read_message_ids AS urids
-				 ON mes.user_id = urids.user_id
+				 ON urids.user_id = {$user_id}
 				AND mes.id = urids.message_id
 			WHERE
 				    mes.talk_id = {$talk_id} 
@@ -52,6 +64,7 @@ class Messages extends YosakuIkoiAbstract {
 				{$sql_time_condition}
 		";
 		$this->query($sql);
+		error_log($sql);
 		
 		$ids = array_map(function($row) {
 			return $row["id"];

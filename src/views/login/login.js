@@ -70,8 +70,18 @@ $(function() {
 		NewMemberForm.render()
 	})
 	
+	// パスワードを忘れた場合
+	let $password_lost = $(".password-lost")
+	$password_lost.on("click", function(e) {
+		e.preventDefault()
+		
+		// メールアドレス入力フォーム表示
+		let password_reset_form = require("./password-lost/password-lost-form")
+		password_reset_form.render()
+	})
 	
-	// 特定ログイン
+	
+	// 匿名ログイン
 	$tokumei_login_form.on("submit", function(e) {
 		e.preventDefault()
 		$.ajax({
@@ -83,9 +93,10 @@ $(function() {
 			success: function(data) {
 				if (data.error) {
 					// ログイン失敗
-					let $message = $(`<div class="error">ログインに失敗しました。<br>しばらくしてから再度お試しください。</div>`)
-					$(this).find(".error").remove();
-					$(this).find(".submit-area").append( $message );
+					let $message = $(`<div class="error"></div>`)
+					$message.append(data.error)
+					$(this).find(".error").remove()
+					$(this).find(".submit-area").append( $message )
 					setTimeout( () => $message.animate({opacity:0}, 1000, "easeOutQuint") , 1500)
 					setTimeout( () => $message.remove() , 2500)
 				} else {
