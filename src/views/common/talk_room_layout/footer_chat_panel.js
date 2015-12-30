@@ -2,10 +2,6 @@ require("./footer_chat_panel.scss")
 
 module.exports = {
 	html: `
-		<div id="image-upload-progress">
-			<div class="per-bar"></div>
-		</div>
-		
 		<form class="footer_chat_panel">
 			<input type="hidden" name="talk_id" value="${global.talk_id}">
 			<div class="tr">
@@ -56,6 +52,11 @@ module.exports = {
 					</button>
 				</div>
 			</div>
+			
+			<div id="image-upload-progress">
+				<div class="per-bar"></div>
+			</div>
+			
 		</form>
 	`,
 	setEventListener: function() {
