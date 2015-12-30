@@ -3,7 +3,7 @@ require("./overlay.scss")
 class Overlay {
 	constructor() {
 		let self = this
-		this.$blurTarget = $(".layout")
+		this.$blurTarget = $(".layout, .container")
 		this.$overlay = $(`
 			<div class="overlay"></div>
 		`)
@@ -16,6 +16,9 @@ class Overlay {
 	show() {
 		this.$overlay.show()
 		this.$blurTarget.addClass("blur")
+	}
+	hide() {
+		this.$overlay.trigger("click")
 	}
 }
 

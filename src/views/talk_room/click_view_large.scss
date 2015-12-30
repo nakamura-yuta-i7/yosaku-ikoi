@@ -1,0 +1,33 @@
+@import "../common/mixins";
+
+.popup-image {
+	// 画面上下中央スタイル
+	position: fixed;
+	z-index: 500;
+	height: 100%;
+	width: 100%;
+	
+	padding: 30px;
+	cursor: pointer;
+	
+	.comment {
+		color: #666;
+		font-size: 10px;
+		text-align: center;
+		margin-bottom: 10px;
+	}
+	
+	img {
+		width: 100%;
+		max-width: 500px;
+		@include box-shadow(30px);
+		
+		position: fixed;
+		z-index: 900;
+		top:0;
+		bottom: 0;
+		right: 0;
+		left: 0;
+		margin: auto;
+	}
+}

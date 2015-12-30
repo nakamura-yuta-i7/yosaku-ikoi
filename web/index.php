@@ -42,9 +42,9 @@ $router->get("/api/messages", function($req, $res) {
 $router->post("/api/messages/add", function($req, $res) {
 	$message = $req->param("message");
 	$talk_id = $req->param("talk_id");
-	if ( AppUser::getUser()["id"] ) {
+	if ( AppUser::isMember() ) {
 		// メンバーログインしている場合
-		$user_id = AppUser::getUser()["id"];
+		$user_id = AppUser::get("id");
 	} else {
 		// 匿名ユーザーの場合
 		$user_id = NULL;

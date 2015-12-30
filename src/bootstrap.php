@@ -1,5 +1,7 @@
 <?php
 date_default_timezone_set('Asia/Tokyo');
+ini_set('display_errors',1);
+
 define("APP_DIR", dirname(__FILE__) . "/../");
 define("IS_STAGING", exec("hostname") != "yosaku.info" );
 define("SITE_URL", "http://ikoi.yosaku.info");
@@ -14,3 +16,4 @@ require_once APP_DIR . "src/db/users.php";
 require_once APP_DIR . "src/db/news.php";
 require_once APP_DIR . "src/db/talks.php";
 require_once APP_DIR . "src/db/messages.php";
+require_once APP_DIR . "src/db/user_read_message_ids.php";

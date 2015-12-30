@@ -35,11 +35,18 @@ module.exports = class Talk {
 			success: (rows) => {
 				rows.forEach((talk) => {
 					
+					// 未読数バッチを生成
+					let badge_unread_count = ``
+					if ( talk.unread_count ) {
+						badge_unread_count = `<span class="mdl-badge" data-badge="${talk.unread_count}"></span>`
+					}
+					
+					// それぞれのトークルームへのリンクを生成
 					let $button = $(`
 						<a class="talk-room table" href="/talk_room?id=${talk.id}">
 							<div class="tr">
 								<div class="icon-area td">
-									<span class="mdl-badge" data-badge="${talk.unread_count}"></span>
+									${badge_unread_count}
 									<i class="material-icons">&#xE0B7;</i>
 								</div>
 								<div class="detail td">

@@ -89,5 +89,19 @@ module.exports = class TalkRoomMessage {
 				</div>
 			</div>
 		`)
+		this.$message_area.find(".click-view-large").on("click", function(e) {
+			e.preventDefault()
+			let overlay = require("../common/parts/overlay/overlay")
+			overlay.show()
+			
+			let img_path = m.img_big_path
+			let click_image = new (require("./click_view_large"))(img_path)
+			click_image.render()
+			
+			click_image.$html.on("click", function(e) {
+				overlay.hide()
+				click_image.close()
+			})
+		})
 	}
 }

@@ -31,4 +31,32 @@ class Messages extends YosakuIkoiAbstract {
 		
 		return $this->extendData($rows);
 	}
+	function getUnreadCountInTalkRoom($talk_id, $last_login_time) {
+		if ( ! $talk_id ) {
+			throw new ErrorException("パラメータが不正です。  arguments:", var_export(func_get_args(), true));
+		}
+		$sql_time_condition = "";
+		if ( $last_login_time ) {
+			$sql_time_condition = " AND mes.created > '{$last_login_time}' ";
+		}
+		$sql = "
+			SELECT 
+				mes.id
+			FROM messages AS mes
+			LEFT JOIN user_read_message_ids AS urids
+				 ON mes.user_id = urids.user_id
+				AND mes.id = urids.message_id
+			WHERE
+				    mes.talk_id = {$talk_id} 
+				AND urids.id IS NULL -- 既読メッセージレコードが無いこと
+				{$sql_time_condition}
+		";
+		$this->query($sql);
+		
+		$ids = array_map(function($row) {
+			return $row["id"];
+		}, $this->fetchAll() );
+		
+		return $ids;
+	}
 }

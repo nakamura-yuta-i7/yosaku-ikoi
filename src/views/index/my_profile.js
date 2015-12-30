@@ -16,7 +16,7 @@ module.exports = {
 					ひとことメッセージ：<span></span>
 				</div>
 				
-				<div class="edit-profile-area mdl-card__actions mdl-card--border">
+				<div class="hidden edit-profile-area mdl-card__actions mdl-card--border">
 					<a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
 						<span class="edit-profile">
 							プロフィールを編集

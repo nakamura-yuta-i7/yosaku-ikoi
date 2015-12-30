@@ -42,12 +42,18 @@ class Talks extends YosakuIkoiAbstract {
 			return $row;
 		}, $rows);
 		
-		// 未読メッセージ数を追加
-		$messages = new Messages();
-		$rows = array_map(function($row) use ($messages) {
-			$row["unread_count"] = 10;
-			return $row;
-		}, $rows);
+		if ( AppUser::isMember() ) {
+			// 未読メッセージ数を追加
+			$messages = new Messages();
+			$rows = array_map(function($row) use ($messages) {
+				$ids = $messages->getUnreadCountInTalkRoom(
+					$talk_id = $row["id"],
+					$last_login_time = AppUser::get("last_login_time")
+				);
+				$row["unread_count"] = count($ids);
+				return $row;
+			}, $rows);
+		}
 		
 		return $rows;
 	}
