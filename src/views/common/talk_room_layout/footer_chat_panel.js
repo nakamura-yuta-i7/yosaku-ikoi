@@ -2,6 +2,10 @@ require("./footer_chat_panel.scss")
 
 module.exports = {
 	html: `
+		<div id="image-upload-progress">
+			<div class="per-bar"></div>
+		</div>
+		
 		<form class="footer_chat_panel">
 			<input type="hidden" name="talk_id" value="${global.talk_id}">
 			<div class="tr">
@@ -84,17 +88,20 @@ module.exports = {
 			$("#"+form_id).remove()
 			let $form = $(`
 				<form id="${form_id}" class="hidden">
-					<input type="hidden" name="yuta" value="tst">
+					<input type="hidden" name="talk_id" value="${global.talk_id}">
 					<input type="file" name="image">
 				</form>
 			`)
 			$("body").append($form)
 			$form.on("submit", function(e) {
 				e.preventDefault()
+				$("#image-upload-progress").show()
+				
 				var formData = new FormData($form[0]);
 				$.ajax({
 					url: "/api/messages/image/add",
 					method: "post",
+					dataType: "json",
 					data: formData,
 					contentType: false,
 					processData: false,
@@ -107,16 +114,36 @@ module.exports = {
 						}
 						function progressHandlingFunction(data) {
 							let per = ( data.loaded / data.total ) * 100
-							console.log( per );
+							console.log( per + "%" )
+							$("#image-upload-progress .per-bar").width( per + "%" )
+							if ( per == 100 ) {
+								setTimeout(function() {
+									$("#image-upload-progress").fadeOut()
+								}, 500)
+							}
 						}
 						return myXhr;
 					},
-					sucess: function(data) {
-						 console.log( "SUCCESS", data );
+					success: function(data) {
+						if (data.error) return alert(data.error)
+						console.log( "SUCCESS", data )
+						// 投稿したデータがかえってくる
+						let $message = new (require("../../talk_room/talk_room_message"))(data).getContent()
+						TalkRoom.layout.addContent( $message )
+						
+						console.log( $message )
+						
+						setTimeout(function() {
+							$("#image-upload-progress").fadeOut()
+						}, 500)
 					},
 					error: function() {
 						console.log("ERROR", arguments);
 						alert("ERROR.  管理者に連絡してください...")
+						
+						setTimeout(function() {
+							$("#image-upload-progress").fadeOut()
+						}, 500)
 					},
 				})
 				$form.remove()

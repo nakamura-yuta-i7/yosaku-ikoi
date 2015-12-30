@@ -59,6 +59,23 @@
 			transform: rotate(100deg);
 		}
 	}
+	// 画像表示の場合
+	.text.img {
+		img {
+			margin-bottom: 5px;
+			display: block;
+		}
+		a {
+			font-size: 12px;
+			text-align: center;
+			vertical-align: middle;
+			text-decoration: none;
+			i {
+				font-size: 12px;
+				vertical-align: middle;
+			}
+		}
+	}
 	.time {
 		padding-right: 5px;
 	}

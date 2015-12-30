@@ -1,6 +1,6 @@
 <?php
 class UploadFileOpe {
-	const UP_DIR = "uploads/";
+	
 	function __construct($_file) {
 		# $_FILES["image"]
 		# sample: 
@@ -13,25 +13,46 @@ class UploadFileOpe {
 		# ]
 		$this->file = $_file;
 	}
-	public $folder_path = "";
 	function start() {
+		$this->getHandle();
+		$this->checkFileType();
 		$this->checkSize();
 		$this->prepareFolder();
 		$this->moveUploadDir();
 	}
+	function getHandle() {
+		require_once dirname(__FILE__) . "/../vendors/class.upload.php";
+		$this->handle = new Upload($this->file);
+		if ( ! $this->handle->uploaded ) {
+			return $this->handle->error;
+		}
+	}
+	
 	public $uploaded_path = "";
-	function getUploadedPath() { return $this->uploaded_path; }
+	function getSrcFileName() { return $this->file["name"]; }
+	function checkFileType() {
+		
+	}
 	function checkSize() {
 		if ( $this->file["size"] > UPLOAD_MAX_BYTE ) {
 			throw new ErrorException("アップロード可能サイズ(". formatBytes(UPLOAD_MAX_BYTE) .")を超えています。");
 		}
 	}
+	
+	const UP_DIR = "uploads";
+	public $folder_path_absolute = "";
+	public $folder_path_relative = "";
 	function prepareFolder() {
 		$year = date_create()->format("Y");
 		$month = date_create()->format("m");
 		$day = date_create()->format("d");
-		$folder_path = APP_DIR . "web/" . static::UP_DIR . "{$year}/{$month}/{$day}";
-		$this->folder_path = $folder_path;
+		
+		$this->folder_path_relative = static::UP_DIR . "/{$year}/{$month}/{$day}";
+		$folder_path = APP_DIR . "web/" . $this->folder_path_relative;
+		$this->folder_path_absolute = $folder_path;
+		$this->mkdir($folder_path);
+	}
+	function mkdir($folder_path) {
 		if ( ! file_exists($folder_path) ) {
 			$is_success = mkdir($folder_path, 0777, $recursive=true);
 			if ( ! $is_success ) {
@@ -39,17 +60,46 @@ class UploadFileOpe {
 			}
 		}
 	}
+	function getUploadedBigPath()   { return $this->uploaded_big_path; }
+	function getUploadedSmallPath() { return $this->uploaded_small_path; }
+	
 	function moveUploadDir() {
-		$tmp_path = $this->file["tmp_name"];
-		# メモ: move_uploaded_file()
-		# このファイルからの相対パスで移動先ファイルパスを指定しないとダメみたい
-		# このアプリの場合、WEBエントリポイントが./web/index.phpなので、
-		# そのファイルからの相対パスである./uploads/(filename)で指定する
-		$moved_path = $this->folder_path . "/" . $this->file["name"];
-		$this->uploaded_path = $moved_path;
-		$is_success = move_uploaded_file($tmp_path, $moved_path);
-		if ( ! $is_success ) {
-			throw new ErrorException("アップロードに失敗しました。");
+		
+		$upload_dir = $this->folder_path_relative;
+		$filename = pathinfo($this->file["name"])["filename"];
+		
+		# 通常の大きさの画像
+		$this->handle->file_overwrite     = false;      //ファイル上書き有効
+		$this->handle->file_auto_rename   = true;       //ファイル名自動リネーム無効
+		$this->handle->file_src_name_body = $filename;  //ファイル名指定
+		$this->handle->image_resize       = true;
+		$this->handle->image_ratio_y      = true;
+		$this->handle->image_x            = 1200;
+		$this->handle->Process($upload_dir);            //画像アップロード実行
+		
+		$this->uploaded_big_path = $upload_dir . "/" . $this->handle->file_dst_name;
+		
+		if ( ! $this->handle->processed ) {
+			throw new ErrorException($this->handle->error);
 		}
+		
+		error_log($this->handle->log);
+		
+		# サムネイル画像
+		$this->handle->file_overwrite     = false;
+		$this->handle->file_auto_rename   = true;
+		$this->handle->file_src_name_body = $filename . "_thumb";
+		$this->handle->image_resize       = true;
+		$this->handle->image_ratio_y      = true;
+		$this->handle->image_x            = 240;
+		$this->handle->Process($upload_dir);
+		
+		$this->uploaded_small_path = $upload_dir . "/" . $this->handle->file_dst_name;
+		
+		if ( ! $this->handle->processed ) {
+			throw new ErrorException($this->handle->error);
+		}
+		
+		error_log($this->handle->log);
 	}
 }

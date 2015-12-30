@@ -20,6 +20,9 @@ body {
 .blur { @include blur(10); }
 .shadow { @include box_shadow_basic(); }
 .hidden { display:none; }
+.clear { clear: both; }
+.left { float:left; }
+.right { float:right; }
 
 .mdl-data-table {
 	td, th {

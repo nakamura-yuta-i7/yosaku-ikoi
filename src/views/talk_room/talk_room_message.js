@@ -14,11 +14,34 @@ module.exports = class TalkRoomMessage {
 		let nickname = `
 			<div class="nickname">${nick}</div>
 		`
-		let text = `
-			<div class="td text">
-				${m.message}
-			</div>
-		`
+		
+		// 画像がアップされているなら画像メッセージにする
+		let text = ""
+		if ( m.img_small_path ) {
+			text = `
+				<div class="td text img">
+					<a href="${m.img_big_path}" class="click-view-large">
+						<img src="${m.img_small_path}" width="120">
+					</a>
+					<a href="${m.img_big_path}" class="click-view-large left">
+						<i class="material-icons">&#xE0BA;</i>
+						拡大
+					</a>
+					<a href="${m.img_big_path}" target="_blank" class="right">
+						<i class="material-icons">&#xE89E;</i>
+						別表示
+					</a>
+					<div class="clear"></div>
+				</div>
+			`
+		} else {
+			// 画像なしの場合
+			text = `
+				<div class="td text">
+					${m.message}
+				</div>
+			`
+		}
 		let time = `
 			<div class="td time">
 				<span>${m.time}</span>

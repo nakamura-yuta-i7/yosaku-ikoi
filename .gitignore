@@ -14,3 +14,7 @@ web/dist/
 
 # for application
 passwords.php
+web/uploads/
+php_errors.log
+
+

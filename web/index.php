@@ -59,12 +59,33 @@ $router->post("/api/messages/add", function($req, $res) {
 	$res->json( $data );
 });
 $router->post("/api/messages/image/add", function($req, $res) {
+	# 画像アップロード
 	require_once APP_DIR . "src/libs/upload_file_ope.php";
 	$file = new UploadFileOpe($_FILES["image"]);
 	$file->start();
-	$path = $file->getUploadedPath();
+	$img_big_path = $file->getUploadedBigPath();
+	$img_small_path = $file->getUploadedSmallPath();
+	# メッセージ基本情報
+	$message = $file->getSrcFileName();
+	$talk_id = $req->param("talk_id");
+	if ( @AppUser::getUser()["id"] ) {
+		// メンバーログインしている場合
+		$user_id = AppUser::getUser()["id"];
+	} else {
+		// 匿名ユーザーの場合
+		$user_id = NULL;
+		$tokumei_user_nickname = AppUser::getUser()["nickname"];
+	}
+	$time = date_create()->format("H:i");
+	$date = date_create()->format("Y-m-d");
 	
-	$res->json( array_merge($req->params(), $_FILES) );
+	$model = new Messages();
+	$model->insert(compact("talk_id", "user_id", "tokumei_user_nickname", 
+		"message", "time", "date", "img_big_path", "img_small_path"));
+	$id = $model->getLastInsertId();
+	$data = $model->findById($id);
+	
+	$res->json( $data );
 });
 # 自分自身の情報
 $router->get("/api/me", function($req, $res) {
