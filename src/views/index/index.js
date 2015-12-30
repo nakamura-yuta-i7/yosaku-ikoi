@@ -79,6 +79,7 @@ function changeUrlAction() {
 		}
 		if ( url == "/talk" ) {
 			let Talk = require("./talk")
+			global.Talk = Talk
 			new Talk().getContent(function($content) {
 				layout.setContent( $content )
 				document.title = "トーク : 良作 憩いの掲示板"
