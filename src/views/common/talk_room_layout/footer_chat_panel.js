@@ -75,8 +75,10 @@ module.exports = {
 					if (data.error) return alert(data.error)
 					// 投稿したデータがかえってくる
 					let $message = new (require("../../talk_room/talk_room_message"))(data).getContent()
-					TalkRoom.layout.addContent( $message )
+					TalkRoom.layout.addMessage( $message )
 					$(".chat-input").val("")
+					// 追加したら画面下までスクロール
+					global.TalkRoom.layout.scrollBottom()
 				}
 			})
 		})
@@ -130,7 +132,7 @@ module.exports = {
 						console.log( "SUCCESS", data )
 						// 投稿したデータがかえってくる
 						let $message = new (require("../../talk_room/talk_room_message"))(data).getContent()
-						TalkRoom.layout.addContent( $message )
+						global.TalkRoom.layout.addMessage( $message )
 						
 						console.log( $message )
 						

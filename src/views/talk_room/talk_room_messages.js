@@ -33,4 +33,31 @@ module.exports = class TalkRoomMessages {
 			callback(null, this.$messages )
 		})
 	}
+	poolingNewMessage() {
+		let talk_id = global.talk_id
+		let datetime = moment().format("YYYY-MM-DD HH:mm:ss")
+		
+		setInterval(function() {
+			$.ajax({
+				url: "/api/messages/search",
+				data: {
+					talk_id,
+					datetime,
+				},
+				dataType: "json",
+				success: function(data) {
+					if (data.error) return console.log( data.error );
+					
+					if ( data.messages.length == 0 ) return false;
+					
+					let TalkRoomMessage = require("./talk_room_message")
+					data.messages.forEach( (m) => {
+						let message = new TalkRoomMessage(m)
+						global.TalkRoom.layout.addMessage( message.getContent() )
+					})
+					datetime = moment().format("YYYY-MM-DD HH:mm:ss")
+				},
+			})
+		}, global.POOLING_INTERVAL )
+	}
 }

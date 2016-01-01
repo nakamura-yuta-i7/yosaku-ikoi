@@ -12,6 +12,7 @@ body {
 
 .color-orange { @include color-orange(); }
 .pad5-side { padding:0px 5px; }
+.pad5 { padding: 5px; }
 .table { display: table; }
 .tr { display: table-row; }
 .td { display: table-cell; }

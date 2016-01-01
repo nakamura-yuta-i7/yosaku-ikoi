@@ -1,6 +1,6 @@
 void function initGlobal(global) {
 	global.Me = {}
-	global.changeUrlAction = changeUrlAction;
+	global.changeUrlAction = changeUrlAction
 }(window)
 
 let layout = require("../common/main_layout/main_layout")
@@ -20,7 +20,43 @@ $(function() {
 	
 	// ルーティング設定
 	setRouting()
+	
+	// 新着メッセージをポーリング
+	poolingNewMessage()
+	
 })
+
+function poolingNewMessage() {
+	let datetime = moment().format("YYYY-MM-DD HH:mm:ss")
+	
+	setInterval(function() {
+		$.ajax({
+			url: "/api/messages/search",
+			data: {
+				datetime,
+			},
+			dataType: "json",
+			success: function(data) {
+				if (data.error) return console.log( data.error );
+				
+				if ( data.messages.length == 0 ) return false;
+				
+				console.log( "new message", data );
+				
+				// 新着メッセージがあったことを通知
+				if ( location.pathname == "/talk" ) {
+					// トーク一覧ページだったらリロードで良いことにする
+					location.reload()
+				} else {
+					// メッセージ表示で通知する
+				}
+				
+				// 新着メッセージ検索用時刻を更新
+				datetime = moment().format("YYYY-MM-DD HH:mm:ss")
+			},
+		})
+	}, global.POOLING_INTERVAL )
+}
 
 function setRouting() {
 	// 最初にアクセスした時／リロードした時にページ読み込み用
@@ -68,13 +104,13 @@ function changeUrlAction() {
 			Home.getContent(function($content) {
 				layout.setContent( $content )
 			})
-			document.title = "ホーム : 良作 憩いの掲示板"
+			document.title = "ホーム : 与作 憩いの掲示板"
 		}
 		if ( url == "/members" ) {
 			let Members = require("./members")
 			new Members().getContent(function($content) {
 				layout.setContent( $content )
-				document.title = "メンバー : 良作 憩いの掲示板"
+				document.title = "メンバー : 与作 憩いの掲示板"
 			})
 		}
 		if ( url == "/talk" ) {
@@ -82,14 +118,22 @@ function changeUrlAction() {
 			global.Talk = Talk
 			new Talk().getContent(function($content) {
 				layout.setContent( $content )
-				document.title = "トーク : 良作 憩いの掲示板"
+				document.title = "トーク : 与作 憩いの掲示板"
+			})
+		}
+		if ( url == "/bulletin" ) {
+			let Talk = require("./talk")
+			let bulletin = require("./bulletin")
+			new bulletin().getContent(function($content) {
+				layout.setContent( $content )
+				document.title = "与作 憩いの掲示板"
 			})
 		}
 		if ( url == "/setting" ) {
 			let settings = require("./settings")
 			settings.getContent(function($content) {
 				layout.setContent( $content )
-				document.title = "せってい : 良作 憩いの掲示板"
+				document.title = "せってい : 与作 憩いの掲示板"
 			})
 		}
 		layout.resetScrollTop()

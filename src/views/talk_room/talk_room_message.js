@@ -42,9 +42,14 @@ module.exports = class TalkRoomMessage {
 				</div>
 			`
 		}
+		
+		let time_str = m.time
+		if ( moment().format("YYYY-MM-DD") > m.date ) {
+			time_str = moment(m.created).format("YYYY/MM/DD<br>HH:mm")
+		}
 		let time = `
 			<div class="td time">
-				<span>${m.time}</span>
+				<span>${time_str}</span>
 			</div>
 		`
 		let user_img = `

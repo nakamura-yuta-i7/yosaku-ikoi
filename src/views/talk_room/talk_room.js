@@ -9,7 +9,13 @@ module.exports = class TalkRoom {
 		let TalkRoomMessages = new (require("./talk_room_messages"))
 		TalkRoomMessages.getContent(function(err, $messages) {
 			// メッセージを描画
-			Layout.addContent( $messages )
+			$messages.forEach(function($message) {
+				Layout.addMessage( $message )
+			})
+			// 追加したら画面下までスクロール
+			Layout.scrollBottom()
 		})
+		// 新着メッセージをポーリング
+		TalkRoomMessages.poolingNewMessage()
 	}
 }

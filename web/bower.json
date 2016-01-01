@@ -20,6 +20,8 @@
     "jquery": "~2.1.4",
     "jquery-color": "git://github.com/jquery/jquery-color.git#~2.1.2",
     "jquery-ui": "~1.11.4",
-    "Blur.js": "https://github.com/CezaryDanielNowak/Blur.js/archive/0.2.0.tar.gz"
+    "Blur.js": "https://github.com/CezaryDanielNowak/Blur.js/archive/0.2.0.tar.gz",
+    "moment": "~2.10.6",
+    "underscore": "~1.8.3"
   }
 }

@@ -23,6 +23,12 @@ module.exports = new class FooterNavi {
 						</a>
 					</div>
 					<div>
+						<a href="/bulletin">
+							<i class="material-icons">&#xE8EE;</i>
+							<span>掲示板</span>
+						</a>
+					</div>
+					<div>
 						<a href="/setting">
 							<i class="material-icons">&#xE8B9;</i>
 							<span>せってい</span>

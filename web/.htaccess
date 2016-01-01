@@ -2,6 +2,9 @@
 php_value upload_max_filesize "20M"
 php_value post_max_size "20M"
 
+php_value session.gc_maxlifetime 999999
+php_value session.cookie_lifetime 999999
+
 <IfModule mod_rewrite.c>
 	
 	RewriteEngine On

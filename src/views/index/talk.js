@@ -43,7 +43,7 @@ module.exports = class Talk {
 					
 					// それぞれのトークルームへのリンクを生成
 					let $button = $(`
-						<a class="talk-room table" href="/talk_room?id=${talk.id}">
+						<a class="talk-room table" talk_id="${talk.id}" href="/talk_room?id=${talk.id}">
 							<div class="tr">
 								<div class="icon-area td">
 									${badge_unread_count}

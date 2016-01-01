@@ -19,6 +19,9 @@ $router->get("/members", function($req, $res) {
 $router->get("/talk", function($req, $res) {
 	$res->render("index", ["title"=>"トーク"]);
 });
+$router->get("/bulletin", function($req, $res) {
+	$res->render("index", ["title"=>"掲示板"]);
+});
 $router->get("/setting", function($req, $res) {
 	$res->render("index", ["title"=>"せってい"]);
 });
@@ -39,6 +42,13 @@ $router->get("/api/messages", function($req, $res) {
 	$rows = $messages->findAllByTalkId($talk_id);
 	$res->json([ "messages"=> $rows ]);
 });
+# 新着メッセージを取得
+$router->get("/api/messages/search", function($req, $res) {
+	$messages = new Messages();
+	$rows = $messages->search( $req->params() );
+	$res->json([ "messages"=> $rows ]);
+});
+
 $router->post("/api/messages/add", function($req, $res) {
 	$message = $req->param("message");
 	$talk_id = $req->param("talk_id");
@@ -53,10 +63,8 @@ $router->post("/api/messages/add", function($req, $res) {
 	$time = date_create()->format("H:i");
 	$date = date_create()->format("Y-m-d");
 	$model = new Messages();
-	$model->insert(compact("talk_id", "user_id", "tokumei_user_nickname", "message", "time", "date"));
-	$id = $model->getLastInsertId();
-	$data = $model->findById($id);
-	$res->json( $data );
+	$postedData = $model->post(compact("talk_id", "user_id", "tokumei_user_nickname", "message", "time", "date"));
+	$res->json( $postedData );
 });
 $router->post("/api/messages/image/add", function($req, $res) {
 	# 画像アップロード
@@ -80,12 +88,10 @@ $router->post("/api/messages/image/add", function($req, $res) {
 	$date = date_create()->format("Y-m-d");
 	
 	$model = new Messages();
-	$model->insert(compact("talk_id", "user_id", "tokumei_user_nickname", 
+	$postedData = $model->post(compact("talk_id", "user_id", "tokumei_user_nickname", 
 		"message", "time", "date", "img_big_path", "img_small_path"));
-	$id = $model->getLastInsertId();
-	$data = $model->findById($id);
 	
-	$res->json( $data );
+	$res->json( $postedData );
 });
 # 自分自身の情報
 $router->get("/api/me", function($req, $res) {

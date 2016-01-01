@@ -33,7 +33,7 @@ module.exports = {
 				</a>
 				<a href="http://yosaku.info/" target="_blank" class="">
 					<i class="material-icons">&#xE91B;</i>
-					<span>良作HP</span>
+					<span>与作HP</span>
 					<i class="material-icons" style="font-size:15px;">&#xE89E;</i>
 				</a>
 				<a href="/logout" class="">

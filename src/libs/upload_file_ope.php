@@ -74,7 +74,7 @@ class UploadFileOpe {
 		$this->handle->file_src_name_body = $filename;  //ファイル名指定
 		$this->handle->image_resize       = true;
 		$this->handle->image_ratio_y      = true;
-		$this->handle->image_x            = 1200;
+		$this->handle->image_x            = 640;
 		$this->handle->Process($upload_dir);            //画像アップロード実行
 		
 		$this->uploaded_big_path = $upload_dir . "/" . $this->handle->file_dst_name;
