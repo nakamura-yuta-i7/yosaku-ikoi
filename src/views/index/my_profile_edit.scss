@@ -38,4 +38,18 @@
 		display: block;
 		margin-bottom: 5px;
 	}
+	
+	.current-img img,
+	.current-img_background img {
+		
+	}
+	input[type=file] {
+		display: block;
+		width: 150px;
+		word-break: break-all;
+	}
+	.comment {
+		color: #999;
+		font-size: 10px;
+	}
 }

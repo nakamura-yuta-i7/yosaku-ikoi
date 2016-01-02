@@ -32,5 +32,50 @@ module.exports = class TalkRoom {
 		// 新着メッセージをポーリング
 		TalkRoomMessages.poolingNewMessage()
 		
+		// 他のトークルームの新着メッセージをポーリング
+		poolingNewMessage()
 	}
+}
+
+
+function poolingNewMessage() {
+	let datetime = moment().format("YYYY-MM-DD HH:mm:ss")
+	
+	setInterval(function() {
+		$.ajax({
+			url: "/api/messages/search",
+			data: {
+				datetime,
+			},
+			dataType: "json",
+			success: function(data) {
+				if (data.error) return console.log( data.error );
+				
+				if ( data.messages.length == 0 ) return false;
+				
+				console.log( "new message", data );
+				
+				// 新着メッセージがあったことを通知
+				let m = data.messages[0]
+				if ( m.talk_id == global.talk_id ) {
+					// 今いるトークルームだったら何もしない
+					
+				} else {
+					// 違うトークルームだったら
+					// メッセージ表示で通知する
+					let notification = new (require("../common/parts/notification/notification"))
+					let message = 
+						`新しいメッセージがあります。<br>
+						${m.message}`
+					notification.$html.find(".message").on("click", (e)=>{
+						location.href = `/talk`
+					})
+					notification.send(message)
+				}
+				
+				// 新着メッセージ検索用時刻を更新
+				datetime = moment().add(1, 'seconds').format("YYYY-MM-DD HH:mm:ss")
+			},
+		})
+	}, global.POOLING_INTERVAL )
 }

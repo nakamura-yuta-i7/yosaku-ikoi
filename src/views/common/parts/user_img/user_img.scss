@@ -1,0 +1,22 @@
+@import "../../mixins";
+
+.user_img {
+	
+	background: #ccc;
+	background-size: cover;
+	background-position: center;
+	
+	width: 80px;
+	height:80px;
+	
+	box-sizing: border-box;
+	border: 2px solid #fff;
+	overflow: hidden;
+	text-align: center;
+	margin: auto;
+	@include border-radius(50%);
+	
+	i {
+		font-size: 80px;
+	}
+}

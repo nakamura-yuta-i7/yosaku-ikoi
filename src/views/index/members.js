@@ -25,22 +25,21 @@ module.exports = class Members {
 				let $table = this.$content.find("table")
 				$table.append(`
 					<tr>
-						<th class="img">img</th>
+						<th class="img">アイコン</th>
 						<th class="name">
-							<span class="nickname">nickname</span>
+							<span class="nickname">ニックネーム</span>
 							<br>
-							<spna class="fullname">name</span>
+							<spna class="fullname">氏名</span>
 						</th>
 						<th class="message">
-							message
+							ひとことメッセージ
 						</th>
 					</tr>
 				`)
 				members.forEach((member) => {
-					let img = ( member.img ? 
-						`<i class="material-icons">&#xE7FD;</i>` :
-						`<i class="material-icons">&#xE7FD;</i>`
-					)
+					console.log( member );
+					let img = new (require("../common/parts/user_img/user_img"))(member).$html.getHTML()
+					
 					let $tr = $(`
 						<tr>
 							<td class="img">${img}</td>

@@ -1,3 +1,5 @@
+require("./talk_room_message.scss")
+
 module.exports = class TalkRoomMessage {
 	getContent() {
 		return this.$message_area
@@ -6,10 +8,6 @@ module.exports = class TalkRoomMessage {
 	constructor(m) {
 		this.$message_area = null
 		
-		let img = `<i class="material-icons">&#xE7FD;</i>`
-		if ( m.user && m.user.img ) {
-			img = m.user.img
-		}
 		let nick = m.user.id ? m.user.nickname : m.tokumei_user_nickname
 		let nickname = `
 			<div class="nickname">${nick}</div>
@@ -52,8 +50,13 @@ module.exports = class TalkRoomMessage {
 				<span>${time_str}</span>
 			</div>
 		`
+		
+		let img = `<i class="material-icons">&#xE7FD;</i>`
+		if ( m.user && m.user.img ) {
+			img = new (require("../common/parts/user_img/user_img"))(m.user).$html.getHTML()
+		}
 		let user_img = `
-			<div class="td user_img">
+			<div class="td user">
 				${img}
 			</div>
 		`

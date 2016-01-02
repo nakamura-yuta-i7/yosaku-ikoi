@@ -11,6 +11,38 @@ class Users extends YosakuIkoiAbstract {
 		return $users;
 	}
 	
+	function editUser($user_id, $values) {
+		# 必須項目チェック
+		if ( ! filter_var($values["email"], FILTER_VALIDATE_EMAIL) ) {
+			throw new ErrorException("メールアドレスの指定に誤りがある可能性があります。");
+		}
+		if (
+			! $values["fullname"] || 
+			! $values["nickname"] || 
+			! $values["email"]
+		) {
+			throw new ErrorException("入力されていない項目があります。");
+		}
+		
+		if ( $_FILES["img"]["size"] > 0 ) {
+			require_once APP_DIR . "src/libs/upload_profile_img_ope.php";
+			$file = new UploadProfileImgOpe($_FILES["img"]);
+			$file->up_dir = "uploads/profile/user/{$user_id}/img";
+			$file->start();
+			$img = $file->getImgPath();
+			$values["img"] = $img;
+		}
+		if ( $_FILES["img_background"]["size"] > 0 ) {
+			require_once APP_DIR . "src/libs/upload_profile_img_ope.php";
+			$file = new UploadProfileImgOpe($_FILES["img_background"]);
+			$file->up_dir = "uploads/profile/user/{$user_id}/img_background";
+			$file->start();
+			$img = $file->getImgPath();
+			$values["img_background"] = $img;
+		}
+		$this->save($values, ["id"=>$user_id]);
+	}
+	
 	// パスワード再発行
 	function resetPassword(Array $data) {
 		$email = $data["email"];

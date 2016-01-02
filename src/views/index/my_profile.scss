@@ -2,56 +2,38 @@
 .my-profile {
 	background: #fff;
 	.cover {
-		background: url(./welcome_card.jpg);
 		background-size: cover;
+		background-position: center;
 		
-		height: 150px;
+		height: 180px;
 		position: relative;
 		
+		@include border-top-left-radius(2px);
+		@include border-top-right-radius(2px);
+		
+		.user_img {
+			
+			position: absolute;
+			bottom: 15px;
+			left: 15px;
+			width: 120px;
+			height:120px;
+			i {
+				font-size: 120px;
+			}
+		}
 		.under-shadow{
 			height: 100%;
 			padding: 10px;
 			box-sizing: border-box;
 			@include under-shadow-gradation();
 		}
-		
-		.img {
-			position: absolute;
-			background: #ccc;
-			bottom: 15px;
-			left: 15px;
-			box-sizing: border-box;
-			border: 2px solid #fff;
-			overflow: hidden;
-			width: 80px;
-			height:80px ;
-			text-align: center;
-			margin: auto;
-			@include border-radius(50%);
-			
-			i {
-				font-size: 80px;
-			}
-		}
 		.nickname {
-			font-size: 25px;
+			font-size: 30px;
 			position: absolute;
 			bottom: 10px;
-			left: 100px;
+			left: 130px;
 			color: #fff;
 		}
 	}
-}
-
-.demo-card-wide.mdl-card {
-	width: 100%;
-	box-sizing: border-box !important;
-}
-.demo-card-wide > .mdl-card__title {
-  color: #fff;
-  height: 176px;
-  background: url('./welcome_card.jpg') center / cover;
-}
-.demo-card-wide > .mdl-card__menu {
-  color: #fff;
 }

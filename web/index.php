@@ -110,26 +110,10 @@ $router->get("/api/me", function($req, $res) {
 $router->post("/api/me/edit", function($req, $res) {
 	$users = new Users();
 	$user_id = AppUser::get("id");
-	$values = $req->params();
 	
-	# メッセージ基本情報
-	if ( $_FILES["img"]["size"] > 0 ) {
-		require_once APP_DIR . "src/libs/upload_profile_img_ope.php";
-		$file = new UploadProfileImgOpe($_FILES["img"]);
-		$file->up_dir = "uploads/profile/user/{$user_id}/img";
-		$file->start();
-		$img = $file->getImgPath();
-		$values["img"] = $img;
-	}
-	if ( $_FILES["img_background"]["size"] > 0 ) {
-		require_once APP_DIR . "src/libs/upload_profile_img_ope.php";
-		$file = new UploadProfileImgOpe($_FILES["img_background"]);
-		$file->up_dir = "uploads/profile/user/{$user_id}/img_background";
-		$file->start();
-		$img = $file->getImgPath();
-		$values["img_background"] = $img;
-	}
-	$users->save($values, ["id"=>$user_id]);
+	$values = $req->params();
+	$users->editUser($user_id, $values);
+	
 	$user = $users->findById($user_id);
 	AppUser::setUser($user);
 	$res->json( AppUser::getUser() );

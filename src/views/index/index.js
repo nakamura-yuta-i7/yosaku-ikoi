@@ -1,5 +1,4 @@
 void function initGlobal(global) {
-	global.Me = {}
 	global.changeUrlAction = changeUrlAction
 }(window)
 
