@@ -49,7 +49,7 @@ module.exports = class Members {
 								<br>
 								<span class="fullname">${member.fullname}</span>
 							</td>
-							<td class="message">${member.message}</td>
+							<td class="message">${ member.message || "" }</td>
 						</tr>
 					`)
 					$table.append( $tr )

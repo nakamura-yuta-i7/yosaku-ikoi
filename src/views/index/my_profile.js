@@ -16,9 +16,9 @@ module.exports = {
 					ひとことメッセージ：<span></span>
 				</div>
 				
-				<div class="hidden edit-profile-area mdl-card__actions mdl-card--border">
-					<a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
-						<span class="edit-profile">
+				<div class="edit-profile-area mdl-card__actions mdl-card--border">
+					<a class="edit-profile mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+						<span>
 							プロフィールを編集
 						</span>
 					</a>
@@ -62,8 +62,15 @@ module.exports = {
 	},
 	setEditProfileArea: function() {
 		if ( ! global.Me.email ) {
-			this.$html.find(".edit-profile-area").hide()
+			return this.$html.find(".edit-profile-area").hide()
 		}
+		let $edit_button = this.$html.find(".edit-profile")
+		
+		$edit_button.on("click", function() {
+			let form = new (require("./my_profile_edit"))
+			form.showForm()
+		})
+		
 	},
 	setMessage: function() {
 		if ( ! global.Me.email ) {
