@@ -12,6 +12,7 @@ module.exports = class TalkRoomLayout {
 				${this.chat_panel.html}
 			</div>
 		`)
+		this.$area = this.$layout.find(".content-area")
 	}
 	render() {
 		$("body").append(this.$layout)
@@ -27,16 +28,64 @@ module.exports = class TalkRoomLayout {
 	scrollBottom() {
 		$("main").delay(100).animate( {scrollTop: $("main").get(0).scrollHeight*2 }, 700 )
 	}
-	addMessage( $message ) {
-		let $area = this.$layout.find(".content-area")
+	getMessageCount() {
+		return this.$area.find(".message").length
+	}
+	showPrevMessagesLink(limit, offset) {
+		let $link = $(`<a class="show-prev-messages"
+			href="/api/messages"
+			talk_id="${global.talk_id}"
+			limit="${limit}"
+			offset="${offset}">これより過去のメッセージを表示</a>`)
+			
+		this.$area.prepend( $link )
+		// 過去のメッセージ表示リンクをクリックした時
+		$link.on("click", (e) => {
+			e.preventDefault()
+			$.ajax({
+				url: $link.attr("href"),
+				data: {
+					talk_id: $link.attr("talk_id"),
+					limit: $link.attr("limit"),
+					offset: $link.attr("offset")
+				},
+				dataType: "json",
+				success: (data) => {
+					if (data.error) return alert(data.error)
+					if (data.messages.length == 0) {
+						$link.hide()
+					}
+					let offset_next = Number($link.attr("offset")) + Number($link.attr("limit"))
+					$link.attr("offset", offset_next )
+					
+					let TalkRoomMessage = require("../../talk_room/talk_room_message")
+					data.messages.reverse()
+					data.messages.forEach((m)=>{
+						let message = new TalkRoomMessage(m)
+						// 前に入れる
+						global.TalkRoom.layout.addMessage( message.getContent(), true )
+					})
+				}
+			})
+		})
+	}
+	// $prepend_flag : 前に入れるかどうか
+	addMessage( $message, $prepend_flag = false ) {
+		
 		let message_ids = []
-		$area.find(".message").each(function() {
+		this.$area.find(".message").each(function() {
 			message_ids.push( $(this).attr("message_id") )
 		})
 		// 重複しないように追加する
 		let message_id = $message.attr("message_id")
 		if ( ! _.contains(message_ids, message_id) ) {
-			$area.append( $message )
+			if ( $prepend_flag ) {
+				// 前に入れる
+				this.$area.prepend( $message )
+			} else {
+				// 後ろに入れる
+				this.$area.append( $message )
+			}
 			message_ids.push( message_id )
 		}
 		return this

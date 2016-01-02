@@ -17,10 +17,6 @@ module.exports = {
 							<span>画像を追加</span>
 						</li>
 						<li disabled class="mdl-menu__item">
-							<i class="material-icons">&#xE3B6;</i>
-							<span>画像を加工してから追加</span>
-						</li>
-						<li disabled class="mdl-menu__item">
 							<i class="material-icons">&#xE064;</i>
 							<span>動画を追加</span>
 						</li>

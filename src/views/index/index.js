@@ -49,10 +49,19 @@ function poolingNewMessage() {
 					location.reload()
 				} else {
 					// メッセージ表示で通知する
+					let notification = new (require("../common/parts/notification/notification"))
+					let message = 
+						`新しいメッセージがあります。<br>
+						${data.messages[0].message}`
+					notification.$html.find(".message").on("click", (e)=>{
+						$(".footer_navi a[href='/talk']").trigger("click")
+						notification.close()
+					})
+					notification.send(message)
 				}
 				
 				// 新着メッセージ検索用時刻を更新
-				datetime = moment().format("YYYY-MM-DD HH:mm:ss")
+				datetime = moment().add(1, 'seconds').format("YYYY-MM-DD HH:mm:ss")
 			},
 		})
 	}, global.POOLING_INTERVAL )

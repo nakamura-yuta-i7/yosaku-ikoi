@@ -20,8 +20,11 @@ module.exports = new class {
 			</form>
 		`)
 		
-		this.$html.on("submit", function(e) {
+		$(document).on("submit", ".add-talk-form", function(e) {
 			e.preventDefault()
+			if ( $(this).find("[name=title]").val().length == 0 ) {
+				return alert("トーク名は必須です")
+			}
 			$.ajax({
 				url: "/api/talk/create",
 				method: "post",
@@ -37,7 +40,7 @@ module.exports = new class {
 				}
 			})
 		})
-		this.$html.on("click", "[type=reset]", function(e) {
+		$(document).on("click", ".add-talk-form [type=reset]", function(e) {
 			Talk.closeModal()
 		})
 	}

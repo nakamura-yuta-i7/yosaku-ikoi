@@ -30,6 +30,15 @@ class Messages extends YosakuIkoiAbstract {
 	function extendData($rows) {
 		// メッセージデータを拡張
 		
+		// 1. メッセージに改行があれば<br>
+		// 2. URLがあれば<a>
+		$rows = array_map(function($row) {
+			$row["message"] = url_henkan($row["message"]); // nl2brの前に変換しないと不具合有り・・・
+			$row["message"] = nl2br($row["message"]);
+			return $row;
+		}, $rows);
+		
+		
 		// ユーザー情報を追加
 		$users = (new Users())->getAll();
 		$rows = array_map(function($row) use ($users) {
@@ -75,11 +84,18 @@ class Messages extends YosakuIkoiAbstract {
 		}
 		return $this->extendData($rows);
 	}
-	function findAllByTalkId($talk_id) {
+	function findAllByTalkId($talk_id, $limit=5, $offset=0) {
 		$talk_id = $this->pdo->quote($talk_id);
-		$sql = " SELECT * from messages WHERE talk_id = {$talk_id} ORDER BY id ASC ";
+		$sql = "
+			SELECT * from messages
+			WHERE talk_id = {$talk_id}
+			ORDER BY id DESC
+			LIMIT {$limit}
+			OFFSET {$offset}
+		";
 		$this->query($sql);
 		$rows = $this->fetchAll();
+		$rows = array_reverse($rows);
 		
 		# メンバーログイン中であれば
 		# 取得したメッセージは既読テーブルに記録する

@@ -1,0 +1,30 @@
+@import "../../mixins";
+
+.notification {
+	position: fixed;
+	background: #fff;
+	
+	width: 80%;
+	top:20px;
+	left:0;
+	right:0;
+	margin: 0 auto;
+	
+	@include box-shadow(3px);
+	@include border-radius(4px);
+	
+	.message {
+		font-size: 12px;
+		width: 100%;
+		padding: 15px;
+		display: table-cell;
+		vertical-align: middle;
+	}
+	.close {
+		display: table-cell;
+		vertical-align: middle;
+		cursor: pointer;
+		padding: 15px;
+		text-align: center;
+	}
+}

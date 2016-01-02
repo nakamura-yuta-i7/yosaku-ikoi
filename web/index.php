@@ -38,8 +38,10 @@ $router->get("/talk_room", function($req, $res) {
 # チャットルームのメッセージ一覧
 $router->get("/api/messages", function($req, $res) {
 	$talk_id = $req->param("talk_id");
+	$limit = $req->param("limit");
+	$offset = $req->param("offset");
 	$messages = new Messages();
-	$rows = $messages->findAllByTalkId($talk_id);
+	$rows = $messages->findAllByTalkId($talk_id, $limit, $offset);
 	$res->json([ "messages"=> $rows ]);
 });
 # 新着メッセージを取得
@@ -47,6 +49,14 @@ $router->get("/api/messages/search", function($req, $res) {
 	$messages = new Messages();
 	$rows = $messages->search( $req->params() );
 	$res->json([ "messages"=> $rows ]);
+});
+# メッセージ合計数
+$router->get("/api/messages/total", function($req, $res) {
+	$talk_id = $req->param("talk_id");
+	$model = new Messages();
+	$model->query("SELECT count(*) AS c FROM messages WHERE talk_id = {$talk_id}");
+	$row = $model->fetch();
+	$res->json([ "total"=> $row["c"] ]);
 });
 
 $router->post("/api/messages/add", function($req, $res) {
@@ -173,11 +183,6 @@ $router->post("/tokumei-login", function($req, $res) {
 		AppUser::setUser([
 			"nickname" => $nickname,
 		]);
-		// 匿名ログインをニュースに追加
-		$news = new News();
-		$news->insert([
-			"message" => "匿名ユーザー「{$nickname}」さんがログインしました。",
-		]);
 		return $res->json(["認証OK"]);
 	}
 	throw new JsonResErrorException("ニックネームを入力してください。");
@@ -193,10 +198,6 @@ $router->post("/auth", function($req, $res) {
 		AppUser::setUser($user);
 		// 匿名ログインをニュースに追加
 		$nickname = $user["nickname"];
-		$news = new News();
-		$news->insert([
-			"message" => "メンバー「{$nickname}」さんがログインしました。",
-		]);
 		return $res->json(["認証OK"]);
 	}
 	throw new JsonResErrorException("認証エラー");

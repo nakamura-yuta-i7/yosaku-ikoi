@@ -31,6 +31,11 @@ module.exports = {
 					<span>旧：憩いの掲示板</span>
 					<i class="material-icons" style="font-size:15px;">&#xE89E;</i>
 				</a>
+				<a href="http://yosaku.info/turing/album/index.html" target="_blank">
+					<i class="material-icons">&#xE875;</i>
+					<span>ヨサツー写真集</span>
+					<i class="material-icons" style="font-size:15px;">&#xE89E;</i>
+				</a>
 				<a href="http://yosaku.info/" target="_blank" class="">
 					<i class="material-icons">&#xE91B;</i>
 					<span>与作HP</span>

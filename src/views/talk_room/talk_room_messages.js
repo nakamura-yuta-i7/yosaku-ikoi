@@ -2,35 +2,44 @@ module.exports = class TalkRoomMessages {
 	constructor() {
 		
 	}
-	loadMessages(callback) {
+	getTotal(talk_id, callback) {
+		$.ajax({
+			url: "/api/messages/total",
+			data: {
+				talk_id
+			},
+			dataType: "json",
+			success: (data) => {
+				if (data.error) return alert(data.error)
+				callback(null, data.total)
+			}
+		})
+	}
+	getContent(limit, offset, callback) {
+		this.messages = []
+		this.$messages = []
+		
 		$.ajax({
 			url: "/api/messages",
 			data: {
 				talk_id: global.talk_id,
+				limit: limit,
+				offset: offset,
 			},
 			method: "get",
 			dataType: "json",
-			success: function(data) {
+			success: (data) => {
 				if ( data.error ) {
 					return alert(data.error)
 				}
-				callback(data.err, data.messages)
+				let TalkRoomMessage = require("./talk_room_message")
+				data.messages.forEach( (m) => {
+					let message = new TalkRoomMessage(m)
+					this.messages.push( message )
+					this.$messages.push( message.getContent() )
+				})
+				callback(null, this.$messages )
 			}
-		})
-	}
-	getContent(callback) {
-		this.messages = []
-		this.$messages = []
-		
-		this.loadMessages( (err, messages) => {
-			
-			let TalkRoomMessage = require("./talk_room_message")
-			messages.forEach( (m) => {
-				let message = new TalkRoomMessage(m)
-				this.messages.push( message )
-				this.$messages.push( message.getContent() )
-			})
-			callback(null, this.$messages )
 		})
 	}
 	poolingNewMessage() {

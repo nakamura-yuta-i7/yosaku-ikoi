@@ -11,9 +11,9 @@ module.exports = new class News {
 					<div class="panel content-center">
 						<button
 							class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored"
-							onclick="javascript:alert('まだ未実装です');"
+							onclick="javascript:alert('準備中です...');"
 							>
-							過去のニュース一覧を見る(comming soon)
+							過去のニュース一覧
 						</button>
 					</div>
 					

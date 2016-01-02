@@ -8,6 +8,11 @@ module.exports = class Members {
 					<table class="members mdl-data-table mdl-shadow--2dp" style="width:100%;">
 					</table>
 				</div>
+				<div class="pad5">
+					<div class="comment panel">
+						メンバーは新着メッセージ通知、未読メッセージ数表示、プロフィール編集ができます。
+					</div>
+				</div>
 			</div>
 		`)
 	}

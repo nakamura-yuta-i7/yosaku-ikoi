@@ -85,6 +85,20 @@ function sendMail($params) {
 	}
 }
 
+function url_henkan($mojiretu){
+	// $mojiretu = htmlspecialchars($mojiretu,ENT_QUOTES);
+	// $mojiretu = nl2br($mojiretu);
+	//文字列にURLが混じっている場合のみ下のスクリプト発動
+		if(preg_match("/(http|https):\/\/[-\w\.]+(:\d+)?(\/[^\s]*)?/",$mojiretu)){
+			preg_match_all("/(http|https):\/\/[-\w\.]+(:\d+)?(\/[^\s]*)?/",$mojiretu,$pattarn);
+				foreach ($pattarn[0] as $key=>$val){
+					$replace[] = '<a class="converted-url" href="'.$val.'" target="_blank">'.$val.'</a>';
+				}
+		$mojiretu = str_replace($pattarn[0],$replace,$mojiretu);
+		}
+	return $mojiretu;
+}
+
 // function sendMail($to, $subject, $body, $from_email,$from_name) {
 // 	$headers  = "MIME-Version: 1.0 \n" ;
 // 	$headers .= "From: " .

@@ -48,6 +48,9 @@ class SqliteAbstract {
 			$this->insert($values);
 		}
 	}
+	function fetch() {
+		return $this->stmt->fetch();
+	}
 	function fetchAll() {
 		return $this->stmt->fetchAll();
 	}
