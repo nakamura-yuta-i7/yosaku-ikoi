@@ -13,10 +13,12 @@ $(function() {
 	$("body").append( layout.$html )
 	
 	// コンテンツエリア(ヘッダー／フッターに挟まれたエリア)の高さをあわせる
-	void function adjustHeight() {
+	function adjustHeight() {
 		let height = $("body").height() - $("header").height() - $(".footer_navi").height()
 		layout.$html.find(".content-area").height( height )
-	}()
+	}
+	adjustHeight()
+	global.addWindowResizeFunction( adjustHeight )
 	
 	// ルーティング設定
 	setRouting()

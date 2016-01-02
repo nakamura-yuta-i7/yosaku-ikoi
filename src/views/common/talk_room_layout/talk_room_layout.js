@@ -17,10 +17,14 @@ module.exports = class TalkRoomLayout {
 	render() {
 		$("body").append(this.$layout)
 		
-		let $content_area = this.$layout.find(".content-area")
-		let height = $("body").height() - $("header").outerHeight() - $(".footer_chat_panel").outerHeight()
-		$content_area.outerHeight( height )
-		$content_area.css({top: $("header").outerHeight() })
+		function adjustHeight() {
+			let $content_area = $(".content-area")
+			let height = $("body").height() - $("header").outerHeight() - $(".footer_chat_panel").outerHeight()
+			$content_area.outerHeight( height )
+			$content_area.css({top: $("header").outerHeight() })
+		}
+		adjustHeight()
+		global.addWindowResizeFunction( adjustHeight )
 		
 		this.chat_panel.setEventListener()
 		this.header.setEventListener()

@@ -1,6 +1,6 @@
 <?php if ( isIE() ) : ?>
 	<div class="ie-not-supported-message">
-		
+		<h1>与作 : 憩いの掲示板</h1>
 		<h2>Sorry</h2>
 		このサイトは InternetExplorer ですべての機能を正常動作させることが困難です。<br>
 		以下のブラウザを推奨しています。お手数おかけしますがインストールしてご閲覧ください。<br>
