@@ -6,6 +6,8 @@
 		position: relative;
 		min-height: 100px;
 		width: 100%;
+		box-sizing: border-box;
+		
 		@include border-radius(2px);
 		@include box-shadow();
 	}

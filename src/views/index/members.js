@@ -10,7 +10,7 @@ module.exports = class Members {
 				</div>
 				<div class="pad5">
 					<div class="comment panel">
-						メンバーは新着メッセージ通知、未読メッセージ数表示、プロフィール編集ができます。
+						メンバーは新着メッセージ通知、未読メッセージ数表示、プロフィール編集などの機能が利用できます。
 					</div>
 				</div>
 			</div>

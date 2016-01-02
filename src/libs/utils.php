@@ -1,5 +1,10 @@
 <?php
 
+function isIE() {
+	$user_agent = $_SERVER['HTTP_USER_AGENT'];
+	return strstr($user_agent, 'Trident') || strstr($user_agent, 'MSIE');
+}
+
 function decamelize($word) {
 	return preg_replace(
 		'/(^|[a-z])([A-Z])/e', 
@@ -31,31 +36,22 @@ function sendMail($params) {
 	
 	extract($params);
 	
-	if ( ! IS_STAGING ) throw new ErrorException("本番環境のメール実装が必要です。");
-	// ───────────────────────────────────
-	// 本番環境のメール送信ロジック
-	// ───────────────────────────────────
-	
-	
-	
-	// ───────────────────────────────────
-	// 以下は、本番環境以外でのメール送信ロジック
-	// ───────────────────────────────────
-	
 	require_once dirname(__FILE__) . '/../vendors/PHPMailer/PHPMailerAutoload.php';
 	require_once dirname(__FILE__) . '/../passwords.php';
 	$mail = new PHPMailer;
 	$mail->setLanguage('ja');
 
 	//$mail->SMTPDebug = 3;                               // Enable verbose debug output
-
-	$mail->isSMTP();                                      // Set mailer to use SMTP
-	$mail->Host = "smtp.mail.yahoo.co.jp";
-	$mail->SMTPAuth = true;                               // Enable SMTP authentication
-	$mail->Username = "yuta_nakamura_i7";
-	$mail->Password = SMTP_PASSWORD;
-	$mail->SMTPSecure = 'ssl';                            // Enable TLS encryption, `ssl` also accepted
-	$mail->Port = 465;                                    // TCP port to connect to
+	
+	if ( IS_STAGING ) {
+		$mail->isSMTP();                                      // Set mailer to use SMTP
+		$mail->Host = "smtp.mail.yahoo.co.jp";
+		$mail->SMTPAuth = true;                               // Enable SMTP authentication
+		$mail->Username = "yuta_nakamura_i7";
+		$mail->Password = SMTP_PASSWORD;
+		$mail->SMTPSecure = 'ssl';                            // Enable TLS encryption, `ssl` also accepted
+		$mail->Port = 465;                                    // TCP port to connect to
+	}
 
 	$mail->setFrom($from);
 	// $mail->addAddress('joe@example.net', 'Joe User');
