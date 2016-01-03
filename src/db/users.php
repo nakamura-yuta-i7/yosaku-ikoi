@@ -82,18 +82,19 @@ class Users extends YosakuIkoiAbstract {
 			
 			$nickname = $user["nickname"];
 
-			$body = "{$nickname} さん、こんにちは<br>
-				ログイン情報は以下になります。<br>
-				<br>
-				email:<br>
-				{$email}<br>
-				<br>
-				password: <br>
-				{$password_original}<br>
-				<br>
-				＜与作:憩いの掲示板＞<br>
-				http://ikoi.yosaku.info<br>
-			";
+			$body = 
+"{$nickname} さん、こんにちは
+ログイン情報は以下になります。
+
+email:
+{$email}
+
+password: 
+{$password_original}
+
+＜与作:憩いの掲示板＞
+http://ikoi.yosaku.info
+";
 			$params = [
 				"to" => $to,
 				"from" => $from,
@@ -157,18 +158,19 @@ class Users extends YosakuIkoiAbstract {
 			$password = $password;
 			$nickname = $data["nickname"];
 
-			$body = "{$nickname} さん、メンバー登録ありがとうございます。<br>
-				ログイン情報は以下になります。<br>
-				<br>
-				email:<br>
-				{$email}<br>
-				<br>
-				password: <br>
-				{$password}<br>
-				<br>
-				＜与作:憩いの掲示板＞<br>
-				http://ikoi.yosaku.info<br>
-			";
+			$body = 
+"{$nickname} さん、メンバー登録ありがとうございます。
+ログイン情報は以下になります。
+
+email:
+{$email}
+
+password: 
+{$password}
+
+＜与作:憩いの掲示板＞
+http://ikoi.yosaku.info
+";
 			$params = [
 				"to" => $to,
 				"from" => $from,

@@ -50,15 +50,17 @@ class Messages extends YosakuIkoiAbstract {
 			$nickname = AppUser::get("nickname");
 			
 			$text = $message["message"];
-			$body = "{$nickname} さんが<br>
-				「{$talk_name}」に投稿しました<br>
-				<br>
-				{$text}
-				<br>
-				<br>
-				＜与作:トーク＞<br>
-				http://ikoi.yosaku.info/talk<br>
-			";
+			$text = strip_tags($text);
+			$body = 
+"{$nickname} さんが
+「{$talk_name}」に投稿しました
+
+{$text}
+	
+	
+＜与作:トーク＞
+http://ikoi.yosaku.info/talk
+";
 			$params = [
 				"to" => $to,
 				"from" => $from,

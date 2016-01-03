@@ -40,6 +40,8 @@ function sendMail($params) {
 	require_once dirname(__FILE__) . '/../passwords.php';
 	$mail = new PHPMailer;
 	$mail->setLanguage('ja');
+	$mail->Encoding = "7bit";
+	$mail->CharSet = 'ISO-2022-JP';
 
 	//$mail->SMTPDebug = 3;                               // Enable verbose debug output
 	
@@ -68,10 +70,10 @@ function sendMail($params) {
 	// $mail->addAttachment('/var/tmp/file.tar.gz');         // Add attachments
 	// $mail->addAttachment('/tmp/image.jpg', 'new.jpg');    // Optional name
 	
-	$mail->isHTML(true);                                  // Set email format to HTML
+	// $mail->isHTML(true);                                  // Set email format to HTML
 	
 	$mail->Subject = mb_encode_mimeheader($subject);
-	$mail->Body    = $body;
+	$mail->Body    = mb_convert_encoding($body, "JIS", "UTF-8");
 	// $mail->AltBody = 'ALTBODYってなんだ？？';
 
 	if( ! $mail->send() ) {
