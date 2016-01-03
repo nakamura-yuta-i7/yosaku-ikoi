@@ -145,6 +145,8 @@ class Users extends YosakuIkoiAbstract {
 			$this->beginTransaction();
 			// 登録
 			$this->insert($data);
+			$user_id = $this->getLastInsertId();
+			$data = $this->findById($user_id);
 			
 			// 新規メンバーに登録完了メールを送る
 			$from = FROM_EMAIL;

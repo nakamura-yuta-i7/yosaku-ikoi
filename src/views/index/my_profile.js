@@ -2,7 +2,7 @@ require("./my_profile.scss")
 module.exports = new class {
 	
 	constructor() {
-		let background_url = `/imgs/my_profile/welcome_card.jpg`
+		let background_url = `/imgs/my_profile/default_cover.jpg`
 		if ( global.Me.img_background ) {
 			background_url = global.Me.img_background
 		}

@@ -21,7 +21,51 @@ class Messages extends YosakuIkoiAbstract {
 			$readMessageIds->insert($data);
 		}
 		
+		# 投稿はメンバーに通知
+		static::mailNotification($postedData);
+		
 		return $postedData;
+	}
+	static function mailNotification(Array $message) {
+		
+		$talks = new Talks();
+		$talk = $talks->findById($message["talk_id"]);
+		$talk_name = $talk["title"];
+		
+		$users = new Users();
+		$userRows = $users->getAll();
+		
+		# 自分を除く全メンバーに通知
+		$from = FROM_EMAIL;
+		$subject = "＜与作トーク＞「{$talk_name}」に新しいメッセージがあります。";
+		foreach ($userRows as $user_id => $user) {
+			if ( AppUser::isMember() ) {
+				# メンバーが投稿した場合で
+				# 自分自身にはメール通知しないようにする
+				if ( $user["id"] == AppUser::get("id") ) {
+					continue;
+				}
+			}
+			$to = $user["email"];
+			$nickname = $message["user"]["nickname"];
+			$text = $message["message"];
+			$body = "{$nickname} さんが<br>
+				「{$talk_name}」に投稿しました<br>
+				<br>
+				{$text}
+				<br>
+				<br>
+				＜与作:トーク＞<br>
+				http://ikoi.yosaku.info/talk<br>
+			";
+			$params = [
+				"to" => $to,
+				"from" => $from,
+				"subject" => $subject,
+				"body" => $body,
+			];
+			sendMail($params);
+		}
 	}
 	function findById($id) {
 		$row = parent::findById($id);
@@ -33,8 +77,7 @@ class Messages extends YosakuIkoiAbstract {
 		// 1. メッセージに改行があれば<br>
 		// 2. URLがあれば<a>
 		$rows = array_map(function($row) {
-			$row["message"] = url_henkan($row["message"]); // nl2brの前に変換しないと不具合有り・・・
-			$row["message"] = nl2br($row["message"]);
+			$row["message"] = static::convertMessage($row["message"]);
 			return $row;
 		}, $rows);
 		
@@ -53,6 +96,11 @@ class Messages extends YosakuIkoiAbstract {
 		
 		return $rows;
 	}
+	static function convertMessage($message_text) {
+		$message_text = url_henkan($message_text); // nl2brの前に変換しないと不具合有り・・・
+		$message_text = nl2br($message_text);
+		return $message_text;
+	}
 	function search($params) {
 		$where = "";
 		$wheres = [];
@@ -68,7 +116,7 @@ class Messages extends YosakuIkoiAbstract {
 			$where = "WHERE " . implode(" AND ", $wheres);
 		}
 		$sql = " SELECT * FROM messages {$where} ";
-		error_log($sql);
+		// error_log($sql);
 		$this->query($sql);
 		$rows = $this->fetchAll();
 		
@@ -109,14 +157,24 @@ class Messages extends YosakuIkoiAbstract {
 		# 取得したメッセージは既読テーブルに記録する
 		if ( AppUser::isMember() ) {
 			$model = new UserReadMessageIds();
-			$user_id = AppUser::get("id");
-			foreach ($rows as $row) {
-				$message_id = $row["id"];
-				$values = compact("user_id", "message_id");
-				$conditions = $values;
-				if ( ! $model->findOne($conditions) ) {
-					$model->insert($values);
+			try {
+				$model->beginTransaction();
+				
+				$user_id = AppUser::get("id");
+				foreach ($rows as $row) {
+					$message_id = $row["id"];
+					$values = compact("user_id", "message_id");
+					$conditions = $values;
+					if ( ! $model->findOne($conditions) ) {
+						$model->insert($values);
+					}
 				}
+				$model->commit();
+				
+			} catch (Exception $e) {
+				
+				$model->rollBack();
+				throw $e;
 			}
 		}
 	}
@@ -141,7 +199,7 @@ class Messages extends YosakuIkoiAbstract {
 				{$sql_time_condition}
 		";
 		$this->query($sql);
-		error_log($sql);
+		// error_log($sql);
 		
 		$ids = array_map(function($row) {
 			return $row["id"];
