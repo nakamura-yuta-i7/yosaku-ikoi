@@ -47,7 +47,8 @@ class Messages extends YosakuIkoiAbstract {
 				}
 			}
 			$to = $user["email"];
-			$nickname = $message["user"]["nickname"];
+			$nickname = AppUser::get("nickname");
+			
 			$text = $message["message"];
 			$body = "{$nickname} さんが<br>
 				「{$talk_name}」に投稿しました<br>
