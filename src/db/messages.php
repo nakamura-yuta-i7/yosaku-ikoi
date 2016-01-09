@@ -62,12 +62,14 @@ class Messages extends YosakuIkoiAbstract {
 http://ikoi.yosaku.info/talk
 ";
 			$params = [
-				"to" => $to,
-				"from" => $from,
+				"mail_to" => $to,
+				"mail_from" => $from,
 				"subject" => $subject,
 				"body" => $body,
 			];
-			sendMail($params);
+			$model = new BeforeSendMails();
+			$model->insert($params);
+			// sendMail($params);
 		}
 	}
 	function findById($id) {

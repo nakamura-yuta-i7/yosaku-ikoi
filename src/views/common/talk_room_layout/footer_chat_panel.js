@@ -62,17 +62,24 @@ module.exports = {
 		// ==========================
 		$("form.footer_chat_panel").on("submit", function(e) {
 			e.preventDefault()
+			if ( $(".chat-input").val().length == 0 ) {
+				return true
+			}
+			let $submit_button = $(this).find("[type=submit]")
+			$submit_button.attr("disabled","true")
+			let data = $(this).serialize()
+			$(".chat-input").val("")
 			$.ajax({
 				url: "/api/messages/add",
-				data: $(this).serialize(),
+				data: data,
 				method: "post",
 				dataType: "json",
 				success: function(data) {
+					$submit_button.removeAttr("disabled")
 					if (data.error) return alert(data.error)
 					// 投稿したデータがかえってくる
 					let $message = new (require("../../talk_room/talk_room_message"))(data).getContent()
 					TalkRoom.layout.addMessage( $message )
-					$(".chat-input").val("")
 					// 追加したら画面下までスクロール
 					global.TalkRoom.layout.scrollBottom()
 				}

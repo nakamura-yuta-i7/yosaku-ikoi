@@ -118,6 +118,22 @@ $router->post("/api/me/edit", function($req, $res) {
 	AppUser::setUser($user);
 	$res->json( AppUser::getUser() );
 });
+# 個人せっていを保存する
+$router->post("/api/me/setting/save", function($req, $res) {
+	$interval = $req->param("notification_setting_interval_sec");
+	$model = new NotificationSettings();
+	$values = [
+		"interval_sec" => $interval,
+	];
+	$user_id = AppUser::get("id");
+	$conditions = ["user_id"=>$user_id];
+	$model->save($values, $conditions);
+	
+	$users = new Users();
+	$user = $users->findById($user_id);
+	AppUser::setUser($user);
+	$res->json( $user );
+});
 $router->get("/api/news", function($req, $res) {
 	$news = new News();
 	$res->json( $news->getLatests() );
@@ -206,6 +222,7 @@ $router->post("/auth", function($req, $res) {
 		"password" => md5($req->param("password")),
 	]);
 	if ( $user ) {
+		$user = $users->findById($user["id"]);
 		AppUser::setUser($user);
 		// 匿名ログインをニュースに追加
 		$nickname = $user["nickname"];

@@ -1,0 +1,21 @@
+@import "../../mixins";
+.toast {
+	padding:1em;
+	background: #333;
+	
+	@include border-radius(3px);
+	@include box-shadow();
+	
+	position: fixed;
+	z-index: 101;
+	top: -100;
+	left: 0;
+	right: 0;
+	margin: 0 auto;
+	
+	max-width: 300px;
+	
+	.message {
+		color: #fff;
+	}
+}

@@ -17,3 +17,5 @@ require_once APP_DIR . "src/db/news.php";
 require_once APP_DIR . "src/db/talks.php";
 require_once APP_DIR . "src/db/messages.php";
 require_once APP_DIR . "src/db/user_read_message_ids.php";
+require_once APP_DIR . "src/db/before_send_mails.php";
+require_once APP_DIR . "src/db/notification_settings.php";

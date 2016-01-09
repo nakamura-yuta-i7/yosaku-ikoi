@@ -2,6 +2,13 @@
 require_once dirname(__FILE__) . "/yosaku_ikoi_abstract.php";
 class Users extends YosakuIkoiAbstract {
 	
+	function findById($id) {
+		$user = parent::findById($id);
+		$notification_settings = new NotificationSettings();
+		$user["setting"]["notification"] = $notification_settings->findOne(["user_id"=> $user["id"] ]);
+		return $user;
+	}
+	
 	// user_id をキーに全ユーザーを返す
 	function getAll() {
 		$users = [];
