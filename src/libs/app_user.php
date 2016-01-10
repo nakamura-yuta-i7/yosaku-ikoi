@@ -3,6 +3,8 @@ session_start();
 
 class AppUser {
 	static function setUser(Array $user) {
+		unset( $_SESSION["user"] );
+		$_SESSION["user"] = [];
 		$_SESSION["user"] = $user;
 		
 		# メンバーがログインした場合

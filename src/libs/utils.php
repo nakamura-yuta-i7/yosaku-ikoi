@@ -26,6 +26,11 @@ function formatBytes($size, $precision = 2) {
 
 function sendMail($params) {
 	
+	if ( IS_STAGING ) {
+		# 検証環境では何もしない
+		return false;
+	}
+	
 	if (
 		! array_key_exists("from", $params) ||
 		! array_key_exists("to", $params) ||

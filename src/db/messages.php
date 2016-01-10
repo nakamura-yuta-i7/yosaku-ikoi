@@ -67,7 +67,14 @@ class Messages extends YosakuIkoiAbstract {
 			];
 			$model = new BeforeSendMails();
 			$model->insert($params);
-			// sendMail($params);
+			
+			$params = [
+				"to" => $to,
+				"from" => $from,
+				"subject" => $subject,
+				"body" => $body,
+			];
+			sendMail($params);
 		}
 	}
 	function findById($id) {

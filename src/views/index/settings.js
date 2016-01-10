@@ -9,7 +9,7 @@ module.exports = new class Settings {
 		this.$setting_panel = $(`
 			<div class="pad5-side">
 				<div class="panel">
-					<form>
+					<form class="setting-form">
 						<h3>トーク</h3>
 						<h4>新着メッセージのメール通知を受ける頻度</h4>
 						<div class="notification_setting_interval"></div>
@@ -29,8 +29,8 @@ module.exports = new class Settings {
 		this.$html.append(this.$setting_panel)
 		
 		// 設定変更ボタンをクリックした時
-		let $form = this.$html.find("form")
-		$form.on("submit", function(e) {
+		let $form = this.$html.find(".setting-form")
+		$(document).on("submit", ".setting-form", function(e) {
 			e.preventDefault()
 			$.ajax({
 				url: "/api/me/setting/save",

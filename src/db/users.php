@@ -5,6 +5,9 @@ class Users extends YosakuIkoiAbstract {
 	function findById($id) {
 		$user = parent::findById($id);
 		$notification_settings = new NotificationSettings();
+		$user["test_prop"] = "yuta";
+		$user["test_prop_2"] = "yuta";
+		$user["setting"] = [];
 		$user["setting"]["notification"] = $notification_settings->findOne(["user_id"=> $user["id"] ]);
 		return $user;
 	}
