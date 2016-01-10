@@ -120,10 +120,11 @@ $router->post("/api/me/edit", function($req, $res) {
 });
 # 個人せっていを保存する
 $router->post("/api/me/setting/save", function($req, $res) {
-	$interval = $req->param("notification_setting_interval_sec");
+	$interval = $req->param("notification_setting_interval");
 	$model = new NotificationSettings();
 	$values = [
-		"interval_sec" => $interval,
+		"user_id" => AppUser::get("id"),
+		"interval" => $interval,
 	];
 	$user_id = AppUser::get("id");
 	$conditions = ["user_id"=>$user_id];

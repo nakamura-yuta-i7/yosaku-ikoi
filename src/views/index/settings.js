@@ -12,7 +12,7 @@ module.exports = new class Settings {
 					<form>
 						<h3>トーク</h3>
 						<h4>新着メッセージのメール通知を受ける頻度</h4>
-						<div class="notification_setting_interval_sec"></div>
+						<div class="notification_setting_interval"></div>
 					</form>
 				</div>
 			</div>
@@ -23,7 +23,7 @@ module.exports = new class Settings {
 				 value="設定変更">
 			`) )
 		}
-		this.$setting_panel.find(".notification_setting_interval_sec").append(
+		this.$setting_panel.find(".notification_setting_interval").append(
 			require("./settings/notification_select").getContent()
 		)
 		this.$html.append(this.$setting_panel)

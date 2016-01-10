@@ -22,6 +22,7 @@ class Messages extends YosakuIkoiAbstract {
 		}
 		
 		# 投稿はメンバーに通知
+		$postedData["message_id"] = $message_id;
 		static::mailNotification($postedData);
 		
 		return $postedData;
@@ -56,12 +57,9 @@ class Messages extends YosakuIkoiAbstract {
 「{$talk_name}」に投稿しました
 
 {$text}
-	
-	
-＜与作:トーク＞
-http://ikoi.yosaku.info/talk
 ";
 			$params = [
+				"message_id" => $message["message_id"],
 				"mail_to" => $to,
 				"mail_from" => $from,
 				"subject" => $subject,
