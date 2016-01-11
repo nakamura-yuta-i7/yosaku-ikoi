@@ -84,6 +84,7 @@ function setRouting() {
 	// URLをpushstateで変化した場合検知
 	(function(history){
 		window.history.onpushstate = function() {
+			console.log( "onpushstate" );
 			changeUrlAction()
 		}
 		var pushState = history.pushState;

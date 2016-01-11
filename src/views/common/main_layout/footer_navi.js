@@ -41,11 +41,14 @@ module.exports = new class FooterNavi {
 	}
 	setEvent() {
 		let self = this
-		this.$html.find("a").on("click", function(e) {
+		 $(document).on("click", ".footer_navi a", function(e) {
+			
 			e.preventDefault()
 			// URL書き換え
 			let url = $(this).attr("href")
 			history.pushState(null, null, url)
+			
+			console.log( "url", url );
 			
 			// ボタンクリック時のアイコンデザイン変更
 			self.$html.find("a").removeClass("color-orange")
