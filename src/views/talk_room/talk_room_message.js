@@ -50,15 +50,8 @@ module.exports = class TalkRoomMessage {
 				<span>${time_str}</span>
 			</div>
 		`
-		
-		let img = `<i class="material-icons">&#xE7FD;</i>`
-		if ( m.user && m.user.img ) {
-			img = new (require("../common/parts/user_img/user_img"))(m.user).$html.getHTML()
-		}
 		let user_img = `
-			<div class="td user">
-				${img}
-			</div>
+			<div class="td user"></div>
 		`
 		let is_me = global.Me.id == m.user_id
 		let me = is_me ? "me" : ""
@@ -97,6 +90,11 @@ module.exports = class TalkRoomMessage {
 				</div>
 			</div>
 		`)
+		let $img = $(`<i class="material-icons">&#xE7FD;</i>`)
+		if ( m.user && m.user.img ) {
+			$img = new (require("../common/parts/user_img/user_img"))(m.user, true).$html
+		}
+		this.$message_area.find(".user").append($img)
 		this.$message_area.find(".click-view-large").on("click", function(e) {
 			e.preventDefault()
 			let overlay = require("../common/parts/overlay/overlay")

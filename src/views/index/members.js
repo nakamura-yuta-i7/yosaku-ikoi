@@ -38,11 +38,11 @@ module.exports = class Members {
 				`)
 				members.forEach((member) => {
 					console.log( member );
-					let img = new (require("../common/parts/user_img/user_img"))(member).$html.getHTML()
+					let $img = new (require("../common/parts/user_img/user_img"))(member, true).$html
 					
 					let $tr = $(`
 						<tr>
-							<td class="img">${img}</td>
+							<td class="img"></td>
 							<td class="name">
 								<span class="nickname">${member.nickname}</span>
 								<br>
@@ -51,6 +51,7 @@ module.exports = class Members {
 							<td class="message">${ member.message || "" }</td>
 						</tr>
 					`)
+					$tr.find(".img").append($img)
 					$table.append( $tr )
 				})
 				callback(this.$content)

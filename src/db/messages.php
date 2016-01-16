@@ -68,6 +68,11 @@ class Messages extends YosakuIkoiAbstract {
 			$model = new BeforeSendMails();
 			$model->insert($params);
 			
+			$body .= "
+＜与作:憩いの掲示板＞
+http://ikoi.yosaku.info/talk
+";
+			
 			$params = [
 				"to" => $to,
 				"from" => $from,

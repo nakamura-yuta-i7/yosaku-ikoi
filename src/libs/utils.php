@@ -27,7 +27,8 @@ function formatBytes($size, $precision = 2) {
 function sendMail($params) {
 	
 	if ( IS_STAGING ) {
-		# 検証環境では何もしない
+		# 検証環境ではログに記載する
+		error_log(var_export($params, true));
 		return false;
 	}
 	

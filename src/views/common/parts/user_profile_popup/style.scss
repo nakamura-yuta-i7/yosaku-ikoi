@@ -1,0 +1,65 @@
+@import "../../mixins.scss";
+
+.profile-popup {
+	width: 300px;
+	min-height: 200px;
+	max-height: 400px;
+	background: #fff;
+	position: fixed;
+	z-index: 200;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	margin: auto auto;
+	
+	@include box-shadow();
+	@include border-radius(2px);
+	
+	.cover-img {
+		background-size: cover;
+		background-position: center;
+		
+		height: 200px;
+		position: relative;
+		
+		@include border-top-left-radius(2px);
+		@include border-top-right-radius(2px);
+		
+		.under-shadow{
+			height: 100%;
+			padding: 10px;
+			box-sizing: border-box;
+			@include under-shadow-gradation();
+		}
+	}
+	.img {
+		position: absolute;
+		top:0;
+		left:0;
+		right:0;
+		margin: 0 auto;
+		margin-top: 160px;
+		.user_img {
+			
+			width: 130px;
+			height: 130px;
+		}
+	}
+	.info {
+		text-align: center;
+		padding: 20px;
+		padding-top: 100px;
+		.fullname {
+			font-size: 10px;
+			color: #ccc;
+		}
+		.nickname {
+			font-size: 18px;
+		}
+		.message {
+			font-size: 12px;
+			color: #666;
+		}
+	}
+}
