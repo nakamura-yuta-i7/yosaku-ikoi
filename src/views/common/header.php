@@ -17,9 +17,9 @@
 	<!-- underscore -->
 	<script src="/bower_components/underscore/underscore-min.js"></script>
 	<!-- webpack -->
-	<script src="/dist/init.js"></script>
-	<link rel="stylesheet" href="/dist/common.css">
-	<script src="/dist/common.js"></script>
+	<script src="/dist/init.js?20160117"></script>
+	<link rel="stylesheet" href="/dist/common.css?20160117">
+	<script src="/dist/common.js?20160117"></script>
 	<!-- Blur -->
 	<script src="/bower_components/Blur.js/dist/jquery.blur.js"></script>
 </head>

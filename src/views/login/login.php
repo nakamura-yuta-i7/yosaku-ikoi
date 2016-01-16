@@ -13,7 +13,7 @@
 <?php endif; ?>
 
 <?php include dirname(__FILE__) . "/../common/header.php"; ?>
-<link rel="stylesheet" href="/dist/login.css">
-<script src="/dist/login.js"></script>
+<link rel="stylesheet" href="/dist/login.css?20160117">
+<script src="/dist/login.js?20160117"></script>
 
 <?php include dirname(__FILE__) . "/../common/footer.php"; ?>

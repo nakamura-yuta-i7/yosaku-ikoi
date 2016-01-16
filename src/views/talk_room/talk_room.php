@@ -7,7 +7,7 @@ void function(global) {
 }(window)
 </script>
 
-<link rel="stylesheet" href="/dist/talk_room.css">
-<script src="/dist/talk_room.js"></script>
+<link rel="stylesheet" href="/dist/talk_room.css?20160117">
+<script src="/dist/talk_room.js?20160117"></script>
 
 <?php include dirname(__FILE__) . "/../common/footer.php"; ?>
