@@ -1,40 +1,67 @@
 <?php
 if ( $_FILES ) {
 	
-	function image_upload($filename){
-		global $upfileName;
-	  require __DIR__ . "/../src/vendors/class.upload.php";
-		
-	  $handle = new Upload($_FILES['image']);
-	  $upload_dir = "test_uploads";
-
-	  if(!$handle->uploaded)
-	    return $handle->error;
-
-	  //通常の大きさの画像
-	  $handle->file_overwrite     = false;      //ファイル上書き有効
-	  $handle->file_auto_rename   = true;     //ファイル名自動リネーム無効
-	  $handle->file_src_name_body = $filename; //ファイル名指定
-	  $handle->image_resize       = true;
-	  $handle->image_ratio_y      = true;
-	  $handle->image_x            = 640;
-	  $handle->Process($upload_dir);           //画像アップロード実行
-
-	  //サムネイル画像
-	  $handle->file_overwrite     = false;
-	  $handle->file_auto_rename   = true;
-	  $handle->file_src_name_body = $filename . "_thumb";
-	  $handle->image_resize       = true;
-	  $handle->image_ratio_y      = true;
-	  $handle->image_x            = 240;
-	  $handle->Process($upload_dir);
-	  $upfileName = $handle->file_dst_name;
-
-
-	  if (!$handle->processed)
-	    return $handle->error;
+	# 画像にEXIF情報が付与されていたら自動的に回転を行う
+	# 使い方サンプル：
+	# 以下でアップロード直後のバイナリデータが参照できるので、
+	# $_FILES['image']['tmp_name']
+	# この関数に対して引数を渡して上げるだけで回転する
+	# image_fix_orientation($_FILES['image']['tmp_name']);
+	function image_fix_orientation($filename) {
+		$exif = exif_read_data($filename);
+		if ( !empty($exif['Orientation']) ) {
+			$image = imagecreatefromjpeg($filename);
+			switch ($exif['Orientation']) {
+				case 3:
+						$image = imagerotate($image, 180, 0);
+						break;
+				case 6:
+						$image = imagerotate($image, -90, 0);
+						break;
+				case 8:
+						$image = imagerotate($image, 90, 0);
+						break;
+			}
+			imagejpeg($image, $filename, 90);
+		}
 	}
 	
+	function image_upload($filename){
+		global $upfileName;
+		require __DIR__ . "/../src/vendors/class.upload.php";
+		require __DIR__ . "/../src/vendors/image.fix.orientaion.php";
+		
+		$handle = new Upload($_FILES['image']);
+		$upload_dir = "test_uploads";
+
+		if(!$handle->uploaded)
+			return $handle->error;
+
+		//通常の大きさの画像
+		$handle->file_overwrite     = false;      //ファイル上書き有効
+		$handle->file_auto_rename   = true;     //ファイル名自動リネーム無効
+		$handle->file_src_name_body = $filename; //ファイル名指定
+		$handle->image_resize       = true;
+		$handle->image_ratio_y      = true;
+		$handle->image_x            = 640;
+		$handle->Process($upload_dir);           //画像アップロード実行
+
+		//サムネイル画像
+		$handle->file_overwrite     = false;
+		$handle->file_auto_rename   = true;
+		$handle->file_src_name_body = $filename . "_thumb";
+		$handle->image_resize       = true;
+		$handle->image_ratio_y      = true;
+		$handle->image_x            = 240;
+		$handle->Process($upload_dir);
+		$upfileName = $handle->file_dst_name;
+
+
+		if (!$handle->processed)
+			return $handle->error;
+	}
+	
+	image_fix_orientation($_FILES['image']['tmp_name']);
 	image_upload($_FILES['image']['name']);
 	echo json_encode( ["upload_file"=>$upfileName] );
 	exit();

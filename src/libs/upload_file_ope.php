@@ -1,4 +1,7 @@
 <?php
+require_once dirname(__FILE__) . "/../vendors/class.upload.php";
+require_once dirname(__FILE__) . "/../vendors/image.fix.orientation.php";
+
 class UploadFileOpe {
 	
 	function __construct($_file) {
@@ -14,14 +17,17 @@ class UploadFileOpe {
 		$this->file = $_file;
 	}
 	function start() {
+		$this->adjustRotate();
 		$this->getHandle();
 		$this->checkFileType();
 		$this->checkSize();
 		$this->prepareFolder();
 		$this->moveUploadDir();
 	}
+	function adjustRotate() {
+		image_fix_orientation($this->file['tmp_name']);
+	}
 	function getHandle() {
-		require_once dirname(__FILE__) . "/../vendors/class.upload.php";
 		$this->handle = new Upload($this->file);
 		if ( ! $this->handle->uploaded ) {
 			return $this->handle->error;
